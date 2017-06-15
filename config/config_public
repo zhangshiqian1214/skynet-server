@@ -15,7 +15,6 @@ cpath      = skynetroot.."cservice/?.so;"
 
 -- lua编写的服务模块路径
 luaservice = skynetroot .."service/?.lua;".. 
-			 root.."common/?.lua;"..
 			 root.."service/?.lua;"
 
 -- lua动态库文件搜索路径,供require调用
@@ -23,8 +22,7 @@ lua_cpath  = skynetroot.."luaclib/?.so;"
 
 -- lua文件搜索路径,供require调用
 lua_path   = skynetroot.."lualib/?.lua;"..
-			 skynetroot.."service/?.lua;"..
-			 root.."service/?.lua;"..
+			 root.."common/?.lua;"..
 			 root.."lualib/?.lua;"..
 			 root.."logic/?.lua;"
 			
