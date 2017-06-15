@@ -1,0 +1,9 @@
+//package datahead;
+
+message Package {
+	required int32 packLen    = 1;
+	required int32 protoId    = 2;
+	required int32 session    = 3;
+	required int32 errorcode  = 4;
+	required string gameproxy = 5;
+}
