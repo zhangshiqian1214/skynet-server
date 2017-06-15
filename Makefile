@@ -2,7 +2,7 @@
 all: skynet/skynet redis/redis-server
 
 skynet/skynet:
-	cd skynet && $(MAKE) linux
+	cd skynet && $(MAKE) macosx
 
 JEMALLOC_STATICLIB := redis/deps/jemalloc/lib/libjemalloc_pic.a
 REDIS_SERVER := redis/src/redis-server
