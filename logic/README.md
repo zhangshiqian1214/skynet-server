@@ -23,7 +23,7 @@
    ```lua
    local STATUS_ONLINE
    local STATUS_OFFLINE
-   ```lua
+   ```
 
 ## 5.类名命名规范, 使用大写字母加小写字母(驼峰式命名):
    RedisMQ
