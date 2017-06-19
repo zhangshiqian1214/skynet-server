@@ -21,23 +21,21 @@
 
 ## 4.常量命名规范, 使用大写单词加下划线:
    ```lua
-   STATUS_ONLINE
-   STATUS_OFFLINE
+   local STATUS_ONLINE
+   local STATUS_OFFLINE
    ```lua
 
 ## 5.类名命名规范, 使用大写字母加小写字母(驼峰式命名):
-   ```lua
    RedisMQ
    SessionMgr
-   ```
 
-## 6.函数命名规范, 使用小写字母加下划线
+## 6.函数命名规范, 使用小写字母加下划线:
    ```lua
    function get_player_info() end
    function set_player_info() end
    ```
 
-## 7.私有函数命名规范, 使用带前下划线加小写字母
+## 7.私有函数命名规范, 使用带前下划线加小写字母:
    ```lua
    function _update_role_info() end
    function _delete_role_info() end
