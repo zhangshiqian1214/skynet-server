@@ -26,13 +26,13 @@
    ```
 
 ## 5.类名命名规范, 使用大写字母加小写字母(驼峰式命名):
-   RedisMQ
-   SessionMgr
+   RedisMQ  
+   SessionMgr  
 
 ## 6.函数命名规范, 使用小写字母加下划线:
    ```lua
-   function get_player_info() end
-   function set_player_info() end
+   function get_player_info() end  
+   function set_player_info() end  
    ```
 
 ## 7.私有函数命名规范, 使用带前下划线加小写字母:
