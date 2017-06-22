@@ -6,8 +6,7 @@
 
 local skynet  = require "skynet"
 local cluster = require "skynet.cluster"
-
-local _conf
+local current_conf
 local acceptor = {}
 
 function acceptor.connect()
@@ -18,17 +17,17 @@ function acceptor.check_alive()
 
 end
 
-function acceptor.set_conf(conf)
-	_conf = conf
+function acceptor.set_cluster_conf(conf)
+	current_conf = conf
 end
 
-function acceptor.get_conf()
-	return _conf
+function acceptor.get_cluster_conf()
+	return current_conf
 end
 
 function acceptor.start()
-	assert(_conf, "conf is nil")
-	cluster.open(_conf.nodename)
+	assert(current_conf, "conf is nil")
+	cluster.open(current_conf.nodename)
 end
 
 return acceptor

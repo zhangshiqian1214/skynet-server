@@ -63,9 +63,9 @@ function RedisMQ:psubscribe(method)
 	
 	--self:stop_watching()
 
-	self._watch:subscribe(method)
+	self._watch:psubscribe(method)
 
-	self._subscribe_map[method] = true	
+	self._subscribe_map[method] = true
 
 	--self:start_watching()
 

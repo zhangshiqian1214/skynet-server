@@ -22,6 +22,24 @@ function connector_mgr.set_connector(name, connector)
 	connector_map[name] = connector
 end
 
+function connector_mgr.get_connectors()
+	return connector_map
+end
 
+function connector_mgr._connector_connect()
+
+end
+
+function connector_mgr._connector_check_alive()
+
+end
+
+function connector_mgr._connect_callback()
+
+end
+
+function connector_mgr._disconnect_callback()
+
+end
 
 return connector_mgr

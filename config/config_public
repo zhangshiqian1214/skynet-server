@@ -4,7 +4,6 @@ thread     = 4
 logger     = nil
 logpath    = "./log/"
 harbor     = 0      --0-单点 1-master slave
-start      = "main"
 bootstrap  = "snlua bootstrap"
 lualoader  = skynetroot.."lualib/loader.lua"
 preload    = root.."preload/preload.lua"
