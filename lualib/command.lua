@@ -1,2 +1,0 @@
-local skynet = require "skynet"
-
