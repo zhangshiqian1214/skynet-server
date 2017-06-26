@@ -55,11 +55,19 @@ end
 --连接成功回调
 local function _connect_callback(conf)
 	print("_connect_callback nodename=", conf.nodename)
+
+	for addr, _ in pairs(_subscribe_cluster_map) do
+		skynet.call(addr, "lua", "monitor_node_change", conf)
+	end
 end
 
 --断开连接回调
 local function _disconnect_callback(conf)
 	print("_disconnect_callback nodename=", conf.nodename)
+
+	for addr, _ in pairs(_subscribe_cluster_map) do
+		skynet.call(addr, "lua", "monitor_node_change", conf)
+	end
 end
 
 -------------------redis msg-----------------------
@@ -110,11 +118,11 @@ end
 
 -------------------subscribe------------------------
 --nodename is nil so subscribe all nodes
-function cluster_mgr.subscribe_cluster(addr)
+function cluster_mgr.subscribe_monitor(addr)
 	_subscribe_cluster_map[addr] = true
 end
 
-function cluster_mgr.unsubscribe_cluster(addr)
+function cluster_mgr.unsubscribe_monitor(addr)
 	_subscribe_cluster_map[addr] = nil
 end
 

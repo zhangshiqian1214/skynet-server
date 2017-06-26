@@ -42,9 +42,10 @@ end
 
 local function dispatch(session, address, cmd, ...)
 	local func = assert(command[cmd], string.format("func = command[%s] is nil", cmd))
-	local ret1, ret2, ret3, ret4 = func(...)
 	if session > 0 then
-		skynet.retpack(ret1, ret2, ret3, ret4)
+		skynet.retpack(func(...))
+	else
+		func(...)
 	end
 end
 

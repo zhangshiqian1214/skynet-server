@@ -28,15 +28,15 @@ function command.check_alive(session, conf)
 	print("recv check_alive nodename=", conf.nodename)
 end
 
-function command.subscribe_cluster(session, addr)
-	local ret1, ret2 = cluster_mgr.subscribe_cluster(addr)
+function command.subscribe_monitor(session, addr)
+	local ret1, ret2 = cluster_mgr.subscribe_monitor(addr)
 	if session > 0 then
 		skynet.retpack(ret1, ret2)
 	end
 end
 
-function command.unsubscribe_cluster(session, addr)
-	local ret1, ret2 = cluster_mgr.unsubscribe_cluster(addr)
+function command.unsubscribe_monitor(session, addr)
+	local ret1, ret2 = cluster_mgr.unsubscribe_monitor(addr)
 	if session > 0 then
 		skynet.retpack(ret1, ret2)
 	end
