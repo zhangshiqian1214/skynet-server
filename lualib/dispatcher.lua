@@ -2,7 +2,7 @@ local skynet = require "skynet"
 local queue = require "skynet.queue"
 local cluster = require "skynet.cluster"
 local proto_map = require "proto_map"
-local client_buffer = require "client_buffer"
+
 
 local lock = queue()
 local dispatcher = {}
@@ -40,7 +40,7 @@ local function dispatch_client_request(ctx, header, data)
 		return 
 	end
 
-	local header, data = client_buffer.unpack(buffer)
+	local header, data = dispatcher.unpack(buffer)
 	if not header then
 		return
 	end

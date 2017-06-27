@@ -15,7 +15,7 @@ skynet.start(function()
 	}
 
 	local current_conf = { 
-			nodename = "node1", 
+			nodename = "node", 
 			nodeport = 9001, 
    			intranetip = "127.0.0.1", 
    			extranetip = "127.0.0.1",
@@ -26,6 +26,9 @@ skynet.start(function()
   	}
 
 	cluster_monitor.start(redis_conf, current_conf)
+
+	skynet.newservice("test_share_memory")
+
 	cluster_monitor.open()
 
  	skynet.error("server is start")

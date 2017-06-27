@@ -1,6 +1,6 @@
 local skynet = require "skynet"
 local cluster = require "skynet.cluster"
-
+local cluster_monitor = require "cluster_monitor"
 local requester = {}
 
 function requester.call(service, cmd, ...)
@@ -12,11 +12,12 @@ function requester.send(service, cmd, ...)
 end
 
 function requester.rpc_call(node, service, cmd, ...)
-	if not node then
+	if not node or not service then
 		return
 	end
 
-	if not service then
+	local nodeconf = cluster_monitor.get_cluster_node(node)
+	if not nodeconf then
 		return
 	end
 
@@ -24,7 +25,7 @@ function requester.rpc_call(node, service, cmd, ...)
 	local args = {...}
 	local ok, msg = xpcall(function()
 		rets = table.pack(cluster.call(node, service, cmd, table.unpack(args)))
-	end)
+	end, debug.traceback)
 	if not ok then
 		error(msg)
 	end

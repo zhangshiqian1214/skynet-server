@@ -1,20 +1,23 @@
+require "skynet.manager"
 local skynet = require "skynet"
-local share_memory = require "share_memory"
+local service = require "service_base"
+local requester = require "requester"
+local logger = require "logger"
+local command = service.command
 
---测试服务间数据交换
-local function test()
-	skynet.sleep(2 * 100)
-	for i=1, 10 do
-		local data = share_memory["test"]
-		print("data=", data)
+function command.test(str)
+	print("recv from node=", str)
 
-		skynet.sleep(1 * 100)
+	logger.debug("recv from node="..str)
 
-	end
+	requester.rpc_send("node", ".test", "test_send", "i'm node1, now test send.")
+
+	return "node1 recv ok"
 end
 
-skynet.start(function()
-	
-	skynet.fork(test)
+function service.on_start()
+	skynet.register(".test1")
+end
 
-end)
+
+service.start()

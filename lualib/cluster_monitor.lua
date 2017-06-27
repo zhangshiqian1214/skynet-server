@@ -28,16 +28,28 @@ function cluster_monitor.get_cluster_nodes()
 	return cluster_nodes
 end
 
+function cluster_monitor.get_cluster_node(nodename)
+	if not nodename then
+		return
+	end
+	local cluster_nodes = cluster_monitor.get_cluster_nodes()
+	if not cluster_nodes then
+		return
+	end
+	return cluster_nodes[nodename]
+end
+
 function cluster_monitor.subscribe_node(callback, nodename)
+	if all_subscribe == false and table.empty(subscribe_nodes) then
+		skynet.call(addr, "lua", "subscribe_monitor", skynet.self())
+	end
+
 	if nodename == nil then
 		all_subscribe = true
 		all_subscribe_cb = callback
 	else
 		subscribe_nodes[nodename] = callback
 	end
-	
-	skynet.call(addr, "lua", "subscribe_monitor", skynet.self())
-
 end
 
 function cluster_monitor.unsubscribe_node(nodename)

@@ -1,6 +1,6 @@
 require("debug")
 local skynet = require "skynet"
-local profile = require "profile"
+local profile = require "skynet.profile"
 local ti = {}
 local command_base = {}
 
@@ -41,7 +41,7 @@ local function profile_call(func, cmd, ...)
 end
 
 local function dispatch(session, address, cmd, ...)
-	local func = assert(command[cmd], string.format("func = command[%s] is nil", cmd))
+	local func = assert(command_base[cmd], string.format("command[%s] is nil", cmd))
 	if session > 0 then
 		skynet.retpack(func(...))
 	else
@@ -52,7 +52,7 @@ end
 skynet.dispatch("lua", dispatch)
 
 skynet.info_func(function()
-	return {mem = collectgarbage("count"), profile = ti }
+	return {mem = collectgarbage("count"), ti = ti }
 end)
 
 return command_base
