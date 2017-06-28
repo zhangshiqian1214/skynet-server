@@ -10,17 +10,17 @@
 
 ## cluster_monitor.lua 集群工具
 ```lua
-	local redis_conf = { host="127.0.0.1", port=6379, db=0 }
-	local node_conf = { 
-		nodename="node1", 
-		nodeprot=9001, 
-	   	intranetip="127.0.0.1", 
-	   	extranetip="127.1.1.1",
-		use_intranet=1, 
-		serverid=1, 
-		servertype=1, 
-		ver=0,
-	}
+local redis_conf = { host="127.0.0.1", port=6379, db=0 }
+local node_conf = { 
+	nodename="node1", 
+	nodeprot=9001, 
+   	intranetip="127.0.0.1", 
+   	extranetip="127.1.1.1",
+	use_intranet=1, 
+	serverid=1, 
+	servertype=1, 
+	ver=0,
+}
 ```
 
 
