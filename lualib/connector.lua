@@ -11,8 +11,8 @@ local coroutine = require "skynet.coroutine"
 CONNECT_NONE = 0 --未连接状态
 CONNECT_OK   = 2 --连接成功
 
-local Connector = class()
-function Connector:_init()
+local connector = class()
+function connector:_init()
 	self._connect_status = CONNECT_NONE
 	self._useable = true
 	self._reconnect_wait = 3
@@ -24,55 +24,54 @@ function Connector:_init()
 	self._co = nil
 end
 
-
-function Connector:set_connect_conf(conf)
+function connector:set_connect_conf(conf)
 	self._connect_conf = conf
 end
 
-function Connector:set_connect_func(connect_func)
+function connector:set_connect_func(connect_func)
 	self._connect_func = connect_func
 end
 
-function Connector:set_check_disconnect_fun(check_disconnect_func)
+function connector:set_check_disconnect_fun(check_disconnect_func)
 	self._check_disconnect_func = check_disconnect_func
 end
 
-function Connector:set_connect_callback(connect_cb)
+function connector:set_connect_callback(connect_cb)
 	self._connect_cb = connect_cb
 end
 
-function Connector:set_disconnect_callback(disconnect_cb)
+function connector:set_disconnect_callback(disconnect_cb)
 	self._disconnect_cb = disconnect_cb
 end
 
-function Connector:set_status_connected()
+function connector:set_status_connected()
 	self._connect_status = CONNECT_OK
 end
 
-function Connector:set_status_disconnect()
+function connector:set_status_disconnect()
 	self._connect_status = CONNECT_NONE
 end
 
-function Connector:is_useable()
+function connector:is_useable()
 	return self._useable == true
 end
 
-function Connector:is_connected()
+function connector:is_connected()
 	return self._connect_status == CONNECT_OK
 end
 
-function Connector:get_connect_conf()
+function connector:get_connect_conf()
 	return self._connect_conf
 end
 
-function Connector:stop()
+function connector:stop()
 	self._useable = false
 	if self._thread then
 		self._thread = nil
 	end
 end
 
-function Connector:connect()
+function connector:connect()
 	local ret
 	local ok, msg = xpcall(function()
 		ret = self._connect_func(self._connect_conf)
@@ -89,7 +88,7 @@ function Connector:connect()
 	return true
 end
 
-function Connector:check_disconnect()
+function connector:check_disconnect()
 	local ok, msg = xpcall(function()
 		self._check_disconnect_func(self._connect_conf)
 	end, debug.traceback)
@@ -105,7 +104,7 @@ function Connector:check_disconnect()
 	return true
 end
 
-function Connector:start()
+function connector:start()
 	self._useable = true
 	skynet.fork(function()
 		self._thread = coroutine.running()
@@ -119,7 +118,7 @@ function Connector:start()
 	end)
 end
 
-function Connector:reset()
+function connector:reset()
 	self._connect_status = CONNECT_NONE
 	self._useable = false
 	self._reconnect_wait = 3
@@ -131,4 +130,4 @@ function Connector:reset()
 	self._co = nil
 end
 
-return Connector
+return connector

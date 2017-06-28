@@ -1,13 +1,9 @@
 --
 -- Author: Kuzhu1990
 -- Date: 2013-12-16 18:52:11
--- 多节点监控
+-- 集群节点管理
 -- 
--- redis_conf = { host="127.0.0.1", port=6379, db=0 }
--- node_conf = { nodename="node1", nodeprot=9001, 
---   intranetip="127.0.0.1", extranetip="127.1.1.1",
---   use_intranet=1, serverid=1, servertype=1, ver=0 }
---
+
 require "skynet.manager"
 local skynet = require "skynet"
 local cluster = require "skynet.cluster"

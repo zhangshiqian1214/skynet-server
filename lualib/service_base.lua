@@ -1,3 +1,9 @@
+--
+-- Author: Kuzhu1990
+-- Date: 2013-12-16 18:52:11
+-- 服务基类
+-- 
+
 local skynet = require "skynet"
 local dispatcher = require "dispatcher"
 local cluster_monitor = require "cluster_monitor"

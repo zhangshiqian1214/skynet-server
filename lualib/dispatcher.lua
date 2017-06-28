@@ -1,10 +1,16 @@
+--
+-- Author: Kuzhu1990
+-- Date: 2013-12-16 18:52:11
+-- 服务rpc派发
+-- 
+
 local skynet = require "skynet"
 local queue = require "skynet.queue"
 local cluster = require "skynet.cluster"
 local proto_map = require "proto_map"
 
 
-local lock = queue()
+local cs = queue()
 local dispatcher = {}
 dispatcher.service_base = nil
 
@@ -47,7 +53,7 @@ local function dispatch_client_request(ctx, header, data)
 
 	local proto = proto_map.protos[header.proto_id]
 	if not proto then
-
+		
 	end
 
 	local modname = proto.module
@@ -65,7 +71,7 @@ local function dispatch_client_request(ctx, header, data)
 	local ec, reply
 	if service_base.is_agent then
 		local ret = {}
-		lock(lockFunc, ret, func, ctx, data)
+		cs(lockFunc, ret, func, ctx, data)
 		ec = ret[1]
 		reply = ret[2]
 	else
@@ -111,7 +117,7 @@ function dispatcher.dispatch_service_request(method, ...)
 	local ec, reply
 	if service_base.is_agent then
 		local ret = {}
-		lock(lockFunc, ret, func, ctx, data)
+		cs(lockFunc, ret, func, ctx, data)
 		ec = ret[1]
 		reply = ret[2]
 	else

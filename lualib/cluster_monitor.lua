@@ -1,3 +1,9 @@
+--
+-- Author: Kuzhu1990
+-- Date: 2013-12-16 18:52:11
+-- 集群节点
+-- 
+
 local skynet = require "skynet"
 local share_memory = require "share_memory"
 

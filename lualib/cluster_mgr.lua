@@ -1,7 +1,7 @@
 --
 -- Author: Kuzhu1990
 -- Date: 2013-12-16 18:52:11
--- 节点
+-- 集群节点管理
 -- 
 
 local json = require "json"

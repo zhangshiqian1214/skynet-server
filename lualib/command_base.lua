@@ -1,3 +1,9 @@
+--
+-- Author: Kuzhu1990
+-- Date: 2013-12-16 18:52:11
+-- 服务调用方法基类
+-- 
+
 require("debug")
 local skynet = require "skynet"
 local profile = require "skynet.profile"

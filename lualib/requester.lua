@@ -1,6 +1,13 @@
+--
+-- Author: Kuzhu1990
+-- Date: 2013-12-16 18:52:11
+-- 服务rpc调用
+-- 
+
 local skynet = require "skynet"
 local cluster = require "skynet.cluster"
 local cluster_monitor = require "cluster_monitor"
+local logger = require "logger"
 local requester = {}
 
 function requester.call(service, cmd, ...)
@@ -13,12 +20,12 @@ end
 
 function requester.rpc_call(node, service, cmd, ...)
 	if not node or not service then
-		return
+		return RPC_ERROR.ARGUMENT_NIL
 	end
 
 	local nodeconf = cluster_monitor.get_cluster_node(node)
 	if not nodeconf then
-		return
+		return RPC_ERROR.NODE_OFFLINE
 	end
 
 	local rets
@@ -27,21 +34,25 @@ function requester.rpc_call(node, service, cmd, ...)
 		rets = table.pack(cluster.call(node, service, cmd, table.unpack(args)))
 	end, debug.traceback)
 	if not ok then
-		error(msg)
+		logger.fatalf("rpc_call fatal, node[%s] err:%s", tostring(node), msg))
+		--assert(false, string.format("rpc_call fatal, node[%s] err:%s", tostring(node), msg))
+		return RPC_ERROR.CALL_FAILED
 	end
+	
 	if not rets then
-		return
+		return RPC_ERROR.OK
 	end
-	return table.unpack(rets)
+	return RPC_ERROR.OK, table.unpack(rets)
 end
 
 function requester.rpc_send(node, service, cmd, ...)
-if not node then
-		return
+	if not node or not service then
+		return RPC_ERROR.ARGUMENT_NIL
 	end
 
-	if not service then
-		return
+	local nodeconf = cluster_monitor.get_cluster_node(node)
+	if not nodeconf then
+		return RPC_ERROR.NODE_OFFLINE
 	end
 
 	cluster.send(node, service, cmd, ...)
