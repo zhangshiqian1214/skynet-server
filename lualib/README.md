@@ -9,7 +9,7 @@
 ## cluster_mgr.lua 集群节点管理
 
 ## cluster_monitor.lua 集群工具
-	```lua
+```lua
 	local redis_conf = { host="127.0.0.1", port=6379, db=0 }
 	local node_conf = { 
 		nodename="node1", 
@@ -21,7 +21,7 @@
 		servertype=1, 
 		ver=0,
 	}
-	```
+```
 
 
 ## dispatcher.lua rpc分派相关
