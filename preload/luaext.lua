@@ -1,3 +1,8 @@
+
+
+
+
+
 function table.empty(t)
 	return _G.next(t) == nil
 end
@@ -5,6 +10,10 @@ end
 function table.tostring(root)
     if root == nil then
         return "nil"
+    elseif root == "number" then
+        return tostring(root)
+    elseif root == "string" then
+        return root
     end
     local cache = {  [root] = "." }
     local function _dump(t,space,name)
