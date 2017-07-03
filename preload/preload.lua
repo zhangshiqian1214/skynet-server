@@ -1,3 +1,5 @@
  require "luaext"
+ require "rpc_error"
  require "service_type"
  require "server_type"
+ require "proto_map"

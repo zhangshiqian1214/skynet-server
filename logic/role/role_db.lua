@@ -1,4 +1,4 @@
-local dbmgr = require "dbmgr"
+local dbmgr = require "common.dbmgr"
 local role_db = {}
 
 function role_db.get_role_info(role_id)

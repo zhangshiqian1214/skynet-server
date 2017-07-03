@@ -55,7 +55,13 @@ function requester.rpc_send(node, service, cmd, ...)
 		return RPC_ERROR.NODE_OFFLINE
 	end
 
-	cluster.send(node, service, cmd, ...)
+	local ok, msg = xpcall(function()
+		cluster.send(node, service, cmd, ...)
+	end, debug.traceback)
+	if not ok then
+		return RPC_ERROR.CALL_FAILED
+	end
+	return RPC_ERROR.OK
 end
 
 function requester.send_to_client(ctx, proto, header, data)

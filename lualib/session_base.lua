@@ -2,6 +2,7 @@ local class = require "class"
 local skynet = require "skynet"
 local queue = require "skynet.queue"
 local requester = require "requester"
+local cluster_monitor = require "cluster_monitor"
 local session_base = class()
 
 
@@ -17,8 +18,22 @@ function session_base:update_ctx(ctx)
 	self._ctx = ctx
 end
 
-function session_base:send_to_client(proto, header, data)
-	requester.send_to_client(self._ctx, proto, header, data)
+function session_base:get_robin_db_addr()
+	if self._dbnode and self._dbserv then
+		return self._dbnode, self._dbserv
+	end
+	self._dbnode = nil
+	self._dbserv = nil
+	local nodes = cluster_monitor.get_cluster_nodes()
+	for nodename, v in pairs(nodes) do
+		local rpc_err, serv = requester.rpc_call(nodename, SERVICE.MASTER_DB, "get_db_svc")
+		if rpc_err == RPC_ERROR.OK and serv then
+			self._dbnode = nodename
+			self._dbserv = serv
+			break
+		end
+	end
+	return self._dbnode, self._dbserv
 end
 
 function session_base:call_db(method, ...)
@@ -50,7 +65,6 @@ end
 
 function session_base:dispatch(func, obj, ctx, req)
 	local rets = {}
-
 	self._cs(self._queue_func, self, rets, func, obj, ctx, req)
 	return rets[1], rets[2]
 end

@@ -1,7 +1,6 @@
 local skynet = require "skynet"
-local queue = require "skynet.queue"
+local role_base = require "common.role_base"
 
-local cs = queue()
 local agent_ctrl = {}
 
 function agent_ctrl.get_role(role_id)

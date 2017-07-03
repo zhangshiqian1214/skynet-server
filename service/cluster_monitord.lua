@@ -7,7 +7,7 @@
 require "skynet.manager"
 local skynet = require "skynet"
 local cluster = require "skynet.cluster"
-local cluster_mgr = require "cluster_mgr"
+local cluster_mgr = require "common.cluster_mgr"
 
 local command = {}
 
