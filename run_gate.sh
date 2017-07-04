@@ -5,4 +5,4 @@ redisdir=$dir/redis
 skynetdir=$dir/skynet
 
 #start skynet
-($skynetdir/skynet $dir/config/config_gate $branch &)
+($skynetdir/skynet $dir/config/config_gate $branch)
