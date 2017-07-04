@@ -1,0 +1,8 @@
+---------------------------public-----------------------
+include("config_public")
+---------------------------------------------------------
+
+start      = "main"
+logfile    = "gate.log"
+debugPort  = 7001
+luaservice = luaservice .. "./service/gate/?.lua;"

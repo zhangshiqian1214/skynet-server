@@ -1,12 +1,13 @@
 local skynet = require "skynet"
+local gate_mgr = require "gate.gate_mgr"
 
 local gate_msg = {}
 
-function CMD.start(conf)
-	skynet.call(gate, "lua", "open", conf)
+function gate_msg.start(conf)
+	skynet.call(gate_mgr.get_gate(), "lua", "open", conf)
 end
 
-function CMD.close(fd)
+function gate_msg.close(fd)
 	
 end
 

@@ -34,7 +34,7 @@ function requester.rpc_call(node, service, cmd, ...)
 		rets = table.pack(cluster.call(node, service, cmd, table.unpack(args)))
 	end, debug.traceback)
 	if not ok then
-		logger.fatalf("rpc_call fatal, node[%s] err:%s", tostring(node), msg))
+		logger.fatalf("rpc_call fatal, node[%s] err:%s", tostring(node), msg)
 		--assert(false, string.format("rpc_call fatal, node[%s] err:%s", tostring(node), msg))
 		return RPC_ERROR.CALL_FAILED
 	end
@@ -55,8 +55,9 @@ function requester.rpc_send(node, service, cmd, ...)
 		return RPC_ERROR.NODE_OFFLINE
 	end
 
+	local args = {...}
 	local ok, msg = xpcall(function()
-		cluster.send(node, service, cmd, ...)
+		cluster.send(node, service, cmd, table.unpack(args))
 	end, debug.traceback)
 	if not ok then
 		return RPC_ERROR.CALL_FAILED
