@@ -1,4 +1,5 @@
 local skynet = require "skynet"
+local proto_map = require "proto_map"
 local socket_msg = require "gate.socket_msg"
 
 local CMD = {}

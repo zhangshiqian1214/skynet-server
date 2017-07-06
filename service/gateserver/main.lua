@@ -1,6 +1,7 @@
 local skynet = require "skynet"
 local share_memory = require "share_memory"
 local cluster_monitor = require "cluster_monitor"
+local proto_map = require "proto_map"
 
 
 skynet.start(function()

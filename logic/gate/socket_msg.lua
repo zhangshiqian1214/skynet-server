@@ -12,7 +12,6 @@ function socket_msg.open(fd, addr)
 	gate_mgr.add_connection(fd, c)
 	print("recv socket_msg open fd=", fd, "addr=", addr)
 
-
 end
 
 function socket_msg.close(fd)
@@ -30,10 +29,11 @@ function socket_msg.warning(fd, size)
 end
 
 function socket_msg.data(fd, msg)
-	print("recv socket_msg data, fd=", fd, "msg=", msg)
+	--print("recv socket_msg data, fd=", fd, "msg=", msg)
 
+	
 
-	skynet.send(gate_mgr.get_gate(), "lua", "send_buffer", fd, msg)
+	--skynet.send(gate_mgr.get_gate(), "lua", "send_buffer", fd, msg)
 end
 
 

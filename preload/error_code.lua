@@ -9,7 +9,7 @@ end
 
 local function add(err)
 	assert(errors[err.code] == nil, string.format("have the same error code[%x], msg[%s]", err.code, err.message))
-	errors[err.code] = {desc = err.message , type = err.type or TYPE_TIPS , back = err.backUi}
+	errors[err.code] = {desc = err.message , type = err.type}
 	return err.code
 end
 

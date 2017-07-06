@@ -20,6 +20,10 @@ function gate_mgr.get_connection(fd)
 	return connections[fd]
 end
 
+function gate_mgr.close_connection(fd)
+	
+end
+
 function gate_mgr.init(gatename)
 	gate = skynet.newservice(gatename)
 end

@@ -1,7 +1,7 @@
 .Package {
-  packLen   0 : integer   #包体长
-  protoId   1 : integer   #协议id
-  session   2 : integer   #消息id
-  errorcode 3 : integer   #错误id
+  protoid   0 : integer   #协议id
+  session   1 : integer   #消息id
+  errorcode 2 : integer   #错误id
+  datasize  3 : integer   #包体长
   gameproxy 4 : string    #游戏代理
 }
