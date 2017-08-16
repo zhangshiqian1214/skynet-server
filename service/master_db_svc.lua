@@ -1,8 +1,10 @@
 
 
 local skynet = require "skynet"
-local dbmgr = require "dbmgr"
+local dbmgr = require "common.dbmgr"
 local db_module = require "common.db_module"
+local svc_name = ...
+local command = {}
 
 local function dispatch(session, addr, cmd, ...)
 	local modname, funcname = string.match(cmd, "([%w_]+)%.([%w_]+)")
@@ -24,5 +26,6 @@ end
 
 
 skynet.start(function()
+	dbmgr.init(svc_name)
 	skynet.dispatch("lua", dispatch)
 end)

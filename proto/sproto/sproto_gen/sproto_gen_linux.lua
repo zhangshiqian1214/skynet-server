@@ -2,38 +2,32 @@ local root       = "../"
 local skynetroot = root.."skynet/"
 package.path     = skynetroot.."lualib/?.lua;"
 package.cpath    = skynetroot.."luaclib/?.so;"
+local parser     = require "sprotoparser"
 
-
-local protoPrefix = root .. "sproto/"
-local spbPrefix   = root .. "spb/"
-local parser = require "sprotoparser"
+local protoDir = root .. "sproto/"
+local spbDir   = root .. "spb/"
 local sprotoGen = {}
 
-function sprotoGen.create(files, outfile)
-	local output = ""
-	for _, v in pairs(files) do
-		local filename = protoPrefix .. v
-		local f = assert(io.open(filename), "Can't open sproto file")
-		local data = f:read "a"
-		output = output .. "\n" .. data
-	end
-	local file = io.open(spbPrefix.. outfile, "w+b")
-	file:write(parser.parse(output))
-	file:close()
+function sprotoGen.create(files)
+  local dumpFiles = {}
+  
+  for k, v in pairs(files) do
+    local filename = protoDir .. v
+    local f = assert(io.open(filename), "Can't open sproto filename["..filename.."]")
+    local data = f:read "a"
+    dumpFiles[k] = dumpFiles[k] or ""
+    dumpFiles[k] = dumpFiles[k] .. data
+  end
+
+  for k, v in pairs(dumpFiles) do
+    local file = io.open(spbDir .. k ..".spb", "w+b")
+    file:write(parser.parse(v))
+    file:close()
+  end
+  
 end
 
-
-local c2sfiles = {
-  "package.sproto",
-  "gate.sproto",
-  "auth.sproto",
-  "busi.sproto",
-  "role.sproto",
-  "lobby.sproto",
-  "game.sproto",
-  "mahjong.sproto",
-  "recorder.sproto",
-  "nn.sproto",
-  "sandongmj.sproto",
+local files = {
+  ["package"] = "package.sproto",
 }
 sprotoGen.create(c2sfiles, "C2S.spb")

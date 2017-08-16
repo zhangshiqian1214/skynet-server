@@ -1,0 +1,35 @@
+.auth {
+	.RegisterReq {
+		account 0 : string #帐号
+		password 1 : string #密码
+	}
+
+	.RegisterReply {
+
+	}
+
+	.LoginReq {
+		account 0 : string #帐号
+		password 1 : string #密码
+	}
+
+	.LoginReply {
+
+	}
+
+	.WeixinReq {
+		
+	}
+
+	.WeiXinReply {
+
+	}
+
+	.VisitorReq {
+		hardware_mac 0 : string #机器编
+	}
+
+	.VisitorReply {
+
+	}
+}

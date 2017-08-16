@@ -25,11 +25,10 @@ local function get_stmcopy(name)
 	if not stmobj then
 		return nil
 	end
-
 	share_data_map[name] = {}
 	share_data_map[name].stmcopy = stm.newcopy(stmobj)
 	share_data_map[name].data = nil
-	return stmcopy
+	return share_data_map[name].stmcopy
 end
 
 local function get_share_memory(name)
@@ -42,7 +41,6 @@ local function get_share_memory(name)
 	if not ok then --旧数据
 		return share_data_map[name].data
 	end
-
 	share_data_map[name].data = data
 	return share_data_map[name].data
 end

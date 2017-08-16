@@ -20,5 +20,5 @@ skynet.start(function()
 			end
 		end
 	end)
-	gate_mgr.init("wsgate")
+	gate_mgr.init("wsgate", true)
 end)

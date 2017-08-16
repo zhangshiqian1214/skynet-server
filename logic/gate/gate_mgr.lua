@@ -3,11 +3,17 @@ local skynet = require "skynet"
 
 local gate_mgr = {}
 local gate
+local iswebsocket
 local connections = {}
 local client_count = 0
 
+
 function gate_mgr.get_gate()
 	return gate
+end
+
+function gate_mgr.is_websocket()
+	return iswebsocket
 end
 
 function gate_mgr.add_connection(fd, c)
@@ -21,10 +27,11 @@ function gate_mgr.get_connection(fd)
 end
 
 function gate_mgr.close_connection(fd)
-	
+	skynet.send(gate, "lua", "kick", fd)
 end
 
-function gate_mgr.init(gatename)
+function gate_mgr.init(gatename, isws)
+	iswebsocket = isws
 	gate = skynet.newservice(gatename)
 end
 

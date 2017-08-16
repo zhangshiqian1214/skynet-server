@@ -3,8 +3,6 @@ include("config_public")
 ---------------------------------------------------------
 
 start      = "main"
-logfile    = "gate.log"
+logfile    = "db.log"
 debugPort  = 7001
-luaservice = luaservice .. "./service/gateserver/?.lua;"
-
-websocket_test = true
+luaservice = luaservice .. "./service/dbserver/?.lua;"

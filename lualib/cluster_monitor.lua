@@ -17,6 +17,10 @@ local function init()
 	addr = skynet.uniqueservice("cluster_monitord")
 end
 
+function cluster_monitor.get_current_nodename()
+	return share_memory["current_nodename"]
+end
+
 function cluster_monitor.get_current_node()
 	local nodename = share_memory["current_nodename"]
 	if not nodename then
@@ -43,6 +47,17 @@ function cluster_monitor.get_cluster_node(nodename)
 		return
 	end
 	return cluster_nodes[nodename]
+end
+
+function cluster_monitor.get_cluster_node_by_server(server_type)
+	local cluster_nodes = cluster_monitor.get_cluster_nodes()
+	if not cluster_nodes then return nil end
+	for _, v in pairs(cluster_nodes) do
+		if v.servertype == server_type then
+			return v
+		end
+	end
+	return nil
 end
 
 function cluster_monitor.subscribe_node(callback, nodename)

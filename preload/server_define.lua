@@ -1,8 +1,8 @@
 
 SERVER = {
-	GATE = "gateserver",
-	DB = "dbserver",
-	LOGIN = "loginserver",
-	LOBBY = "lobbyserver",
-	GAME = "gameserver",
+	GATE  = 1,
+	DB    = 2,
+	LOGIN = 3,
+	LOBBY = 4,
+	GAME  = 5,
 }

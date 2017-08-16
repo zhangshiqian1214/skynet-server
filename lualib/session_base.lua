@@ -40,11 +40,11 @@ function session_base:call_db(method, ...)
 	if not self._dbnode or not self._dbserv then
 		return 
 	end
-	local rpc_err, ... = requester.rpc_call(self._dbnode, self._dbserv, method, ...)
+	local rpc_err, ret1, ret2, ret3, ret4 = requester.rpc_call(self._dbnode, self._dbserv, method, ...)
 	if rpc_err ~= RPC_ERROR.OK then
 		return
 	end
-	return ...
+	return ret1, ret2, ret3, ret4
 end
 
 function session_base:send_db(method, ...)

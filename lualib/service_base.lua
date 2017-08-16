@@ -16,11 +16,11 @@ service_base.is_agent = false
 
 local command = service_base.command
 
-function command.dispatch_client_request(ctx, ...)
+function command.dispatch_client_msg(ctx, ...)
 	return dispatcher.dispatch_client_request(ctx, ...)
 end
 
-function command.dispatch_service_request(ctx, ...)
+function command.dispatch_service_msg(ctx, ...)
 	return dispatcher.dispatch_service_request(ctx, ...)
 end
 

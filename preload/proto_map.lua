@@ -1,14 +1,15 @@
 
 
-PROTO = {
+PROTO_TYPE = {
 	C2S = 1,
 	S2C = 2,
 }
 
 --协议文件名
 PROTO_FILES = {
-	[1] = "package",
-	[2] = "gate",
+	package = 1,
+	gate    = 2,
+	auth    = 3,
 }
 
 local proto_map = {
@@ -38,18 +39,20 @@ end
 setmetatable(proto_map, mt)
 
 
-M_WATCHDOG = {
+M_Gate = {
 	module = MODULE.GATE,
-	ping = {id = 0x0001, type = PROTO.C2S,  request = "integer", response = "integer", desc = "心跳"},
+	ping             = {id = 0x0001, type = PROTO_TYPE.C2S,  request = "integer", response = "integer", desc = "心跳"},
+
+	network_event    = {id = 0x00a1, type = PROTO_TYPE.S2C, request = nil, response = "gate.NetworkEvent", desc = "网络事件"},
 }
-proto_map.Watchdog = M_WATCHDOG
+proto_map.Gate = M_Gate
 
 M_AUTH = {
 	module  = MODULE.AUTH,
-	create_account = {id = 0x0101, type = PROTO.C2S, request = "string", response = "string", desc = "注册帐号"},
-	login_account  = {id = 0x0102, type = PROTO.C2S, request = "string", response = "string", desc = "登陆帐号"},
-	third_login    = {id = 0x0103, type = PROTO.C2S, request = "string", response = "string", desc = "第三方登陆"},
-	visitor_login  = {id = 0x0104, type = PROTO.C2S, request = "string", response = "string", desc = "游客登陆"},
+	register_account = {id = 0x0101, type = PROTO_TYPE.C2S, request = "string", response = "string", desc = "注册帐号"},
+	login_account    = {id = 0x0102, type = PROTO_TYPE.C2S, request = "string", response = "string", desc = "登陆帐号"},
+	weixin_login     = {id = 0x0103, type = PROTO_TYPE.C2S, request = "string", response = "string", desc = "微信登陆"},
+	visitor_login    = {id = 0x0104, type = PROTO_TYPE.C2S, request = "string", response = "string", desc = "游客登陆"},
 }
 proto_map.auth = M_AUTH
 

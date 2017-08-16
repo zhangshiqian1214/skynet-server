@@ -1,0 +1,5 @@
+.gate {
+	.NetworkEvent {
+		type 0 : integer #网络事件类型
+	}
+}

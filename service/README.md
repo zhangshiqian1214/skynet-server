@@ -14,3 +14,9 @@
      是一个agent. 
 
 
+## 3.对于服务节点监听端口布置
+     gateserver --> tcp:5001 ws:5002 cluster:9001
+     dbserver --> cluster:9002
+     loginserver --> cluster:9003
+     lobbyserver --> cluster:9004 http:6001
+     gameserver --> cluster:9005

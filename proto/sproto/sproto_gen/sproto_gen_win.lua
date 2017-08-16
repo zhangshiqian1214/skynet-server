@@ -26,9 +26,10 @@ function sprotoGen.create(files)
 	
 end
 
-
 local files = {
   ["package"] = "package.sproto",
+  ["gate"] = "gate.sproto",
+  ["auth"] = "auth.sproto",
 }
 
 sprotoGen.create(files)
