@@ -5,7 +5,7 @@
 	@ company  : zhangshiqian
 ]]
 
-local conf = require "sharedata.corelib"
+local sharedata_core = require "skynet.sharedata.corelib"
 
 local config_db = {}
 local config_keys = {}
@@ -19,7 +19,7 @@ setmetatable(config_db, {
 		if value[2] then
 			return value[2]
 		end
-		local obj = conf.box(value[1])
+		local obj = sharedata_core.box(value[1])
 		value[2] = obj
 		return obj
 	end
@@ -37,7 +37,7 @@ function config_db.update(configs)
 		local value = config_keys[k]
 		if value then
 			if value[2] then
-				conf.update(value[2], p)
+				sharedata_core.update(value[2], p)
 			end
 			value[1] = p
 		else

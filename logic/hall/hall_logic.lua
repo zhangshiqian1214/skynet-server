@@ -47,7 +47,17 @@ function hall_logic.cast_login(ctx, req)
 	else
 		context.rpc_call(online.agentnode, online.agentaddr, "login", ctx, req)
 	end
+end
 
+function hall_logic.get_player_online_state(ctx, req)
+	local player_id = ctx.player_id
+	local player_online = db_helper.call(DB_SERVICE.hall, "hall.get_player_online", player_id)
+	return player_online
+end
+
+function hall_logic.get_room_inst_list(ctx, req)
+	local room_id = req
+	
 end
 
 return hall_logic

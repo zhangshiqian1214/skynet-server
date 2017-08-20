@@ -3,6 +3,7 @@ local service = require "service_base"
 local agent_ctrl = require "agent.agent_ctrl"
 local cluster_monitor = require "cluster_monitor"
 local context = require "context"
+local config_db = require "config_db"
 local cluster_config = require "config.cluster_config"
 local command = service.command
 service.is_agent = true
@@ -10,6 +11,11 @@ service.is_agent = true
 local current_conf
 local login_callbacks
 local logout_callbacks
+
+local modules = {
+	agent = "agent.agent_ctrl",
+	player = "player.player_ctrl",
+}
 
 local function register_login_and_logout()
 	login_callbacks = {
@@ -20,6 +26,20 @@ local function register_login_and_logout()
 		require("player.player_ctrl").on_logout,
 		require("agent.agent_ctrl").on_logout,
 	}
+end
+
+local function init_modules()
+	setmetatable(service.modules, {
+		__index = function(t, k)
+			local mod = modules[k]
+			if not mod then
+				return nil
+			end
+			local v = require(mod)
+			t[k] = v
+			return v
+		end
+	})
 end
 
 
@@ -34,18 +54,19 @@ function command.login(ctx, player_info)
 end
 
 function command.update_configs(configs)
-
+	config_db.update(configs)
 end
 
 function command.init(configs)
-	
+	config_db.init(configs)
+	init_modules()
+	register_login_and_logout()
+	agent_ctrl.init(current_conf)
 end
 
 function service.on_start()
 	local server_id = tonumber(skynet.getenv("cluster_server_id"))
 	current_conf = cluster_config[server_id]
-	agent_ctrl.init(current_conf)
-	register_login_and_logout()
 end
 
 service.start()

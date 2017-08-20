@@ -1,0 +1,13 @@
+---------------------------public-----------------------
+include("config_public")
+---------------------------------------------------------
+
+start      = "main"
+logfile    = "xunpinnn.log"
+debugPort  = 7005
+cluster_server_id = 6
+luaservice = luaservice .. "./service/gameserver/xpnn/?.lua;"
+
+init_desk_count = 10
+init_agent_count = 10
+room_id = 10101

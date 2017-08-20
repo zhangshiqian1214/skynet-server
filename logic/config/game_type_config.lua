@@ -2,7 +2,7 @@
 	游戏大类id, 游戏大类名称
 	game_type, name
 ]]
-local game_type = {
+local game_type_config = {
 	[100] = {
 			game_type = 100,
 			name = [[对战场]],
@@ -20,4 +20,4 @@ local game_type = {
 			name = [[包厢场]],
 		},
 }
-return game_type
+return game_type_config

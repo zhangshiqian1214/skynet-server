@@ -1,6 +1,7 @@
 require "skynet.manager"
 local skynet = require "skynet"
 local context = require "context"
+local configs = require "config.hall_config"
 local hall_ctrl = {}
 
 local logic_svc_pool = {}
@@ -19,8 +20,9 @@ end
 local function init_agent_pool()
 	local agent_count = skynet.getenv("agent_count")
 	for i=1, agent_count do
-		local agent = skynet.newservice("agent")
+		local agent = skynet.launch("snlua","agent")
 		skynet.name(".agent"..i, agent)
+		context.call(agent, "init", configs)
 		table.insert(agent_pool, agent)
 	end
 end
@@ -56,6 +58,18 @@ end
 
 function hall_ctrl.cast_logout(ctx, req)
 
+end
+
+function hall_ctrl.get_player_online_state(ctx, req)
+	local svc = get_logic_svc()
+	local reply = context.call(svc, "get_player_online_state", ctx, req)
+	return SYSTEM_ERROR.success, reply
+end
+
+function hall_ctrl.get_room_inst_list(ctx, req)
+	local svc = get_logic_svc()
+	local reply = context.call(svc, "get_room_inst_list", ctx, req)
+	return SYSTEM_ERROR.success, reply 
 end
 
 return hall_ctrl

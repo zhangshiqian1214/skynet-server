@@ -23,13 +23,16 @@ function sprotoGen.create(files)
 		file:write(parser.parse(v))
 		file:close()
 	end
-	
 end
 
 local files = {
-  ["package"] = "package.sproto",
-  ["gate"] = "gate.sproto",
-  ["auth"] = "auth.sproto",
+  package = "package.sproto",
+  gate = "gate.sproto",
+  auth = "auth.sproto",
+  hall = "hall.sproto",
+  player = "player.sproto",
+  room = "room.sproto",
+  xpnn = "xpnn.sproto",
 }
 
 sprotoGen.create(files)

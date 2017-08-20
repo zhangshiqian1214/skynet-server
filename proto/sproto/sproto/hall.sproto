@@ -1,0 +1,16 @@
+.hall {
+	.RoomInst{
+		roomproxy 0 : string #房间实例代理
+		player_num 1 : integer #当前玩家数量
+		player_limit 2 : integer #房间玩家上限
+	}
+
+	.RoomInstList{
+		room_insts 0 : *RoomInst #游戏房间实例
+	}
+
+	.PlayerOnlineState{
+		room_id 0 : integer #玩家所在房间id
+		roomproxy 1 : string #玩家所在房间代理
+	}
+}

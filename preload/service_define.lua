@@ -6,4 +6,5 @@ SERVICE = {
 	WATCHDOG        = ".watchdog",
 	AUTH            = ".auth",
 	HALL            = ".hall",
+	ROOM            = ".room",
 }

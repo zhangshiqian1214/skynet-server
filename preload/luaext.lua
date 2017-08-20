@@ -19,6 +19,15 @@ function totable(v)
     return v
 end
 
+function array_totable(array)
+    array = totable(array)
+    local tb = {}
+    for i=1,#array,2 do
+        tb[array[i]] = array[i+1]
+    end
+    return tb
+end
+
 function clone(object)
     local lookup_table = {}
     local function _copy(object)
@@ -66,6 +75,8 @@ function table.toarray(tb)
     end
     return info
 end
+
+
 
 function table.tostring(root)
     if root == nil then

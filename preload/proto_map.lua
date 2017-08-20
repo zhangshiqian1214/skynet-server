@@ -38,7 +38,7 @@ mt.__newindex = function(t, k, v)
 end
 setmetatable(proto_map, mt)
 
-
+--网关
 M_Gate = {
 	module = MODULE.GATE,
 	ping             = {id = 0x0001, type = PROTO_TYPE.C2S,  request = "integer", response = "integer", desc = "心跳"},
@@ -47,6 +47,7 @@ M_Gate = {
 }
 proto_map.Gate = M_Gate
 
+--验证
 M_AUTH = {
 	module  = MODULE.AUTH,
 	register_account = {id = 0x0101, type = PROTO_TYPE.C2S, request = "auth.RegisterReq", response = "auth.RegisterReply", desc = "注册帐号"},
@@ -55,5 +56,35 @@ M_AUTH = {
 	visitor_login    = {id = 0x0104, type = PROTO_TYPE.C2S, request = "auth.VisitorReq", response = "auth.VisitorReply", desc = "游客登陆"},
 }
 proto_map.auth = M_AUTH
+
+--大厅
+M_HALL = {
+	module = MODULE.HALL,
+	get_room_inst_list = {id = 0x0201, type = PROTO_TYPE.C2S, request = "integer", response = "hall.RoomInstList", desc = "获取房间实例列表"},
+	get_player_online_state = {id = 0x0202, type = PROTO_TYPE.C2S, request = nil, response = "hall.PlayerOnlineState", desc = "获取玩家在线状态"},
+}
+proto_map.hall = M_HALL
+
+--玩家
+M_PLAYER = {
+	module = MODULE.PLAYER,
+	get_player_info = {id = 0x0301, type = PROTO_TYPE.C2S, request = nil, response = "player.PlayerInfo", desc = "获取自已的玩家信息"},
+}
+proto_map.player = M_PLAYER
+
+--房间
+M_ROOM = {
+	module = MODULE.ROOM,
+	enter_room = {id = 0x0401, type = PROTO_TYPE.C2S, request = nil, response = nil, desc = "进入游戏房间"},
+	exit_room = {id = 0x0402, type = PROTO_TYPE.C2S, request = nil, response = nil, desc = "退出游戏房间"},
+}
+proto_map.room = M_ROOM
+
+--血拼牛牛
+M_XPNN = {
+	module = MODULE.XPNN
+
+}
+proto_map.xpnn = M_XPNN
 
 return proto_map

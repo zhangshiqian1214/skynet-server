@@ -11,9 +11,9 @@ skynet.start(function()
 
 	sproto_helper.register_protos()
 
-	skynet.uniqueservice("hall")
+	skynet.uniqueservice("room")
 
 	cluster_monitor.open()
 
-	skynet.error("hallserver start ok")
+	skynet.error("xunpingnn start ok")
 end)

@@ -1,6 +1,7 @@
 local skynet = require "skynet"
 local context = require "context"
 local cluster_monitor = require "cluster_monitor"
+local create_player_config = require "config.create_player_config"
 local auth_ctrl = {}
 
 local logic_svc_pool = {}

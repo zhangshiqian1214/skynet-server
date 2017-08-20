@@ -53,5 +53,15 @@ local cluster_config = {
 			servertype = 4,
 			ver = 0,
 		},
+	[6] = {
+			serverid = 6,
+			nodename = "xpnn",
+			nodeport = 9006,
+			intranetip = "127.0.0.1",
+			extranetip = "127.0.0.1",
+			use_intranet = 1,
+			servertype = 5,
+			ver = 0,
+		},
 }
 return cluster_config
