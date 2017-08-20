@@ -17,11 +17,10 @@ function command.connect(session, conf)
 	if session > 0 then
 		skynet.retpack(true)
 	end
-	print("recv connect nodename=", conf.nodename)
 end
 
 function command.check_alive(session, conf)
-	print("recv check_alive nodename=", conf.nodename)
+	
 end
 
 function command.subscribe_monitor(session, addr)

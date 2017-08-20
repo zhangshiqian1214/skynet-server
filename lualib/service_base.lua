@@ -13,15 +13,15 @@ service_base.name = nil
 service_base.modules = {}
 service_base.command = require "command_base"
 service_base.is_agent = false
-
+dispatcher.service_base = service_base
 local command = service_base.command
 
 function command.dispatch_client_msg(ctx, ...)
-	return dispatcher.dispatch_client_request(ctx, ...)
+	return dispatcher.dispatch_client_msg(ctx, ...)
 end
 
 function command.dispatch_service_msg(ctx, ...)
-	return dispatcher.dispatch_service_request(ctx, ...)
+	return dispatcher.dispatch_service_msg(ctx, ...)
 end
 
 function command.monitor_node_change(conf)

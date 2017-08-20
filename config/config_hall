@@ -1,0 +1,14 @@
+---------------------------public-----------------------
+include("config_public")
+---------------------------------------------------------
+
+start      = "main"
+logfile    = "hall.log"
+debugPort  = 7005
+cluster_server_id = 5
+luaservice = luaservice .. "./service/hallserver/?.lua;"
+
+
+
+hall_logic_count = 4
+agent_count = 4

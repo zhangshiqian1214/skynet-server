@@ -49,10 +49,10 @@ proto_map.Gate = M_Gate
 
 M_AUTH = {
 	module  = MODULE.AUTH,
-	register_account = {id = 0x0101, type = PROTO_TYPE.C2S, request = "string", response = "string", desc = "注册帐号"},
-	login_account    = {id = 0x0102, type = PROTO_TYPE.C2S, request = "string", response = "string", desc = "登陆帐号"},
-	weixin_login     = {id = 0x0103, type = PROTO_TYPE.C2S, request = "string", response = "string", desc = "微信登陆"},
-	visitor_login    = {id = 0x0104, type = PROTO_TYPE.C2S, request = "string", response = "string", desc = "游客登陆"},
+	register_account = {id = 0x0101, type = PROTO_TYPE.C2S, request = "auth.RegisterReq", response = "auth.RegisterReply", desc = "注册帐号"},
+	login_account    = {id = 0x0102, type = PROTO_TYPE.C2S, request = "auth.LoginReq", response = "auth.LoginReply", desc = "登陆帐号"},
+	weixin_login     = {id = 0x0103, type = PROTO_TYPE.C2S, request = "auth.WeixinReq", response = "auth.WeiXinReply", desc = "微信登陆"},
+	visitor_login    = {id = 0x0104, type = PROTO_TYPE.C2S, request = "auth.VisitorReq", response = "auth.VisitorReply", desc = "游客登陆"},
 }
 proto_map.auth = M_AUTH
 

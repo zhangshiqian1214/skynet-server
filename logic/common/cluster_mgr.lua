@@ -54,7 +54,7 @@ end
 
 --连接成功回调
 local function _connect_callback(conf)
-	print("_connect_callback nodename=", conf.nodename)
+	-- print("_connect_callback nodename=", conf.nodename)
 
 	for addr, _ in pairs(_subscribe_cluster_map) do
 		skynet.call(addr, "lua", "monitor_node_change", conf)
@@ -63,7 +63,7 @@ end
 
 --断开连接回调
 local function _disconnect_callback(conf)
-	print("_disconnect_callback nodename=", conf.nodename)
+	-- print("_disconnect_callback nodename=", conf.nodename)
 
 	for addr, _ in pairs(_subscribe_cluster_map) do
 		skynet.call(addr, "lua", "monitor_node_change", conf)
@@ -73,7 +73,7 @@ end
 -------------------redis msg-----------------------
 
 function redis_msg.add_cluster_node(conf)
-	print("recv redis add_cluster_node message nodename=", conf.nodename)
+	-- print("recv redis add_cluster_node message nodename=", conf.nodename)
 
 	cluster_mgr.cache_cluster_conf(conf)
 	cluster_mgr.reload_cluster_conf()
@@ -82,7 +82,7 @@ function redis_msg.add_cluster_node(conf)
 end
 
 function redis_msg.remove_cluster_node(conf)
-	print("recv redis remove_cluster_node message nodename=", conf.nodename)
+	-- print("recv redis remove_cluster_node message nodename=", conf.nodename)
 
 	cluster_mgr.remove_cluster_conf(conf)
 	cluster_mgr.reload_cluster_conf()

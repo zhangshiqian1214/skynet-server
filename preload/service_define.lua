@@ -5,4 +5,5 @@ SERVICE = {
 	AGENT_MGR       = ".agent_mgr",
 	WATCHDOG        = ".watchdog",
 	AUTH            = ".auth",
+	HALL            = ".hall",
 }

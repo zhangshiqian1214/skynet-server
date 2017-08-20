@@ -219,7 +219,7 @@ function logger.warning(...)
 	logger.log(logger.WARNING, ...)
 end
 
-function logger.warningf(...)
+function logger.warningf(format, ...)
 	logger.log(logger.WARNING, string.format(format, ...))
 end
 
@@ -227,7 +227,7 @@ function logger.error(...)
 	logger.log(logger.ERROR, ...)
 end
 
-function logger.errorf(...)
+function logger.errorf(format, ...)
 	logger.log(logger.ERROR, string.format(format, ...))
 end
 
@@ -235,7 +235,7 @@ function logger.fatal(...)
 	logger.log(logger.FATAL, ...)
 end
 
-function logger.fatalf(...)
+function logger.fatalf(format, ...)
 	logger.log(logger.FATAL, string.format(format, ...))
 end
 

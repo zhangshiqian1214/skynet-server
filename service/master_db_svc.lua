@@ -1,7 +1,7 @@
 
 
 local skynet = require "skynet"
-local dbmgr = require "common.dbmgr"
+local db_mgr = require "common.db_mgr"
 local db_module = require "common.db_module"
 local svc_name = ...
 local command = {}
@@ -26,6 +26,6 @@ end
 
 
 skynet.start(function()
-	dbmgr.init(svc_name)
+	db_mgr.init(svc_name)
 	skynet.dispatch("lua", dispatch)
 end)

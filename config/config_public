@@ -25,4 +25,6 @@ lua_path   = skynetroot.."lualib/?.lua;"..
 			 root.."common/?.lua;"..
 			 root.."lualib/?.lua;"..
 			 root.."logic/?.lua;"
-			
+
+random_type = 2
+cluster_redis_id = 1

@@ -1,11 +1,24 @@
 .auth {
+	.PlayerBase {
+		player_id 0 : integer
+		nickname 1 : string
+		head_id 2 : integer
+		head_url 3 : string
+		sex 4 : integer #0-未知 1-男 2-女
+		gold 5 : integer(2) #金币
+	}
+
 	.RegisterReq {
 		account 0 : string #帐号
 		password 1 : string #密码
+		telephone 2 : string #电话号码
+		agentId 3 : string #代理id(推荐人id)
+		create_index 4 : integer #创建索引
+		nickname 5 : string #昵称
 	}
 
 	.RegisterReply {
-
+		player 0 : PlayerBase
 	}
 
 	.LoginReq {
@@ -14,22 +27,26 @@
 	}
 
 	.LoginReply {
-
+		player 0 : PlayerBase
 	}
 
 	.WeixinReq {
-		
+		union_id 0 : string #微信用户惟一id
+		head_url 1 : string #微信头像
+		nickname 2 : string #微信昵称
+		sex  3 : integer #性别 1-男 2-女
 	}
 
 	.WeiXinReply {
-
+		player 0 : PlayerBase
 	}
 
 	.VisitorReq {
-		hardware_mac 0 : string #机器编
+		visit_token   0 : string  #游客token
 	}
 
 	.VisitorReply {
-
+		player 0 : PlayerBase
+		visit_token 1 : string #游客登录token
 	}
 }

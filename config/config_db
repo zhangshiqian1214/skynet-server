@@ -6,3 +6,4 @@ start      = "main"
 logfile    = "db.log"
 debugPort  = 7001
 luaservice = luaservice .. "./service/dbserver/?.lua;"
+cluster_server_id = 3

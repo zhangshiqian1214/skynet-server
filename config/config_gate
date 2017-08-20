@@ -6,5 +6,6 @@ start      = "main"
 logfile    = "gate.log"
 debugPort  = 7001
 luaservice = luaservice .. "./service/gateserver/?.lua;"
+cluster_server_id = 1
 
 websocket_test = true

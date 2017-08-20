@@ -27,7 +27,10 @@ function gate_mgr.get_connection(fd)
 end
 
 function gate_mgr.close_connection(fd)
-	skynet.send(gate, "lua", "kick", fd)
+	local c = connections[fd]
+	if c then
+		connections[fd] = nil
+	end
 end
 
 function gate_mgr.init(gatename, isws)

@@ -6,7 +6,6 @@ local logger = require "logger"
 local command = service.command
 
 function command.test_send(str)
-	print("recv test_send from node1 str=", str)
 	logger.debug(str)
 end
 

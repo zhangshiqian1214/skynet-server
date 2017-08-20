@@ -1,0 +1,13 @@
+---------------------------public-----------------------
+include("config_public")
+---------------------------------------------------------
+
+start      = "main"
+logfile    = "login.log"
+debugPort  = 7001
+cluster_server_id = 4
+luaservice = luaservice .. "./service/loginserver/?.lua;"
+
+
+
+auth_logic_count = 4

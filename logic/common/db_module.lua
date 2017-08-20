@@ -9,7 +9,7 @@ setmetatable(db_modules, {
 		if mod ~= nil then
 			return mod
 		end
-		mod = require(k.."_db")
+		mod = require(k.."."..k.."_db")
 		if mod then
 			modules[k] = mod
 		end

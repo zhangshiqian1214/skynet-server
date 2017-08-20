@@ -3,9 +3,7 @@ local RedisMQ = require "redis_mq"
 local share_memory = require "share_memory"
 local cluster_monitor = require "cluster_monitor"
 
-local function testMQ(...)
-	print("testMQ message=", ...)
-end
+
 
 skynet.start(function()
 	local redis_conf = {

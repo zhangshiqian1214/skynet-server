@@ -19,13 +19,17 @@ function requester.send(service, cmd, ...)
 end
 
 function requester.rpc_call(node, service, cmd, ...)
-	if not node or not service then
-		return RPC_ERROR.ARGUMENT_NIL
+	if not node then
+		return RPC_ERROR.node_nil
+	end
+
+	if not service then
+		return RPC_ERROR.service_nil
 	end
 
 	local nodeconf = cluster_monitor.get_cluster_node(node)
 	if not nodeconf then
-		return RPC_ERROR.NODE_OFFLINE
+		return RPC_ERROR.node_offline
 	end
 
 	local rets
@@ -36,23 +40,27 @@ function requester.rpc_call(node, service, cmd, ...)
 	if not ok then
 		logger.fatalf("rpc_call fatal, node[%s] err:%s", tostring(node), msg)
 		--assert(false, string.format("rpc_call fatal, node[%s] err:%s", tostring(node), msg))
-		return RPC_ERROR.CALL_FAILED
+		return RPC_ERROR.service_stoped
 	end
 	
-	if not rets then
-		return RPC_ERROR.OK
+	if rets then
+		rets = table.unpack(rets)
 	end
-	return RPC_ERROR.OK, table.unpack(rets)
+	return RPC_ERROR.success, rets
 end
 
 function requester.rpc_send(node, service, cmd, ...)
-	if not node or not service then
-		return RPC_ERROR.ARGUMENT_NIL
+	if not node then
+		return RPC_ERROR.node_nil
+	end
+
+	if not service then
+		return RPC_ERROR.service_nil
 	end
 
 	local nodeconf = cluster_monitor.get_cluster_node(node)
 	if not nodeconf then
-		return RPC_ERROR.NODE_OFFLINE
+		return RPC_ERROR.node_offline
 	end
 
 	local args = {...}
@@ -60,9 +68,9 @@ function requester.rpc_send(node, service, cmd, ...)
 		cluster.send(node, service, cmd, table.unpack(args))
 	end, debug.traceback)
 	if not ok then
-		return RPC_ERROR.CALL_FAILED
+		return RPC_ERROR.service_stoped
 	end
-	return RPC_ERROR.OK
+	return RPC_ERROR.success
 end
 
 function requester.send_to_client(ctx, proto, header, data)

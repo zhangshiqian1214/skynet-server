@@ -12,7 +12,9 @@ local function init_db_pool()
 		local svc_count = conf.svc_count
 		for i=1, svc_count do
 			local svc = skynet.newservice("master_db_svc", conf.svc_name)
-			if conf.service_name then
+			if conf.get_svc == GET_SVC_TYPE.unique then
+				skynet.name(conf.service_name, svc)
+			else
 				skynet.name(conf.service_name..i, svc)
 			end
 			db_pool[conf.svc_name] = db_pool[conf.svc_name] or {}
