@@ -40,3 +40,12 @@ local visitorReq = {
 }
 print("visitorReq="..json.encode(visitorReq))
 
+local roomListReq = {
+	header = {
+		protoid = 0x0201,
+		session = 2,
+		response = nil,
+	},
+	data = 10101,
+}
+print("roomListReq="..json.encode(roomListReq))

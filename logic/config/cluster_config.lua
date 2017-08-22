@@ -61,7 +61,7 @@ local cluster_config = {
 			extranetip = "127.0.0.1",
 			use_intranet = 1,
 			servertype = 5,
-			ver = 0,
+			ver = nil,
 		},
 }
 return cluster_config

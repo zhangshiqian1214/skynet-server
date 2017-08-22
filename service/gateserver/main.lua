@@ -28,6 +28,7 @@ skynet.start(function()
 
 	cluster_monitor.open()
 
+
  	skynet.error("gateserver start ok")
 
 end)

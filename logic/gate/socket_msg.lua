@@ -68,8 +68,8 @@ function socket_msg.data(fd, msg)
 		local j_header = packet.header
 		local j_data = packet.data
 		j_header.response = 0
+		-- print("j_header=", table.tostring(j_header), "j_data=", j_data)
 		local buffer = sproto_helper.pack(j_header, j_data)
-
 		dispatch_data(c, buffer)
 		return
 	end

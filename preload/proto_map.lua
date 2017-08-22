@@ -10,10 +10,15 @@ PROTO_FILES = {
 	package = 1,
 	gate    = 2,
 	auth    = 3,
+	hall    = 4,
+	player  = 5,
+	room    = 6,
+	xpnn    = 7,
 }
 
 local proto_map = {
 	protos = {},
+	proto_pool = {},
 }
 
 local mt = {}
@@ -26,6 +31,7 @@ mt.__newindex = function(t, k, v)
 			tmp.module = v.module.name
 			tmp.server = v.module.server
 			tmp.service = v.module.service
+			tmp.is_agent = v.module.is_agent
 			tmp.id = proto.id
 			tmp.type = proto.type
 			tmp.request = proto.request

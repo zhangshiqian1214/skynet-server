@@ -28,9 +28,12 @@ function hall_logic.cast_login(ctx, req)
 	end
 	local is_logined = false
 	if online and online.agentnode and online.agentaddr then
-		is_logined = true
-	else
-		is_logined = false
+		local agent_node_info = cluster_monitor.get_cluster_node(online.agentnode)
+		if agent_node_info and agent_node_info.ver == online.agentver then
+			is_logined = true
+		else
+			db_helper.call(DB_SERVICE.hall, "hall.del_player_online", player_id)
+		end
 	end
 	online = online or {}
 	online.session = ctx.session
@@ -52,12 +55,21 @@ end
 function hall_logic.get_player_online_state(ctx, req)
 	local player_id = ctx.player_id
 	local player_online = db_helper.call(DB_SERVICE.hall, "hall.get_player_online", player_id)
+	print("get_player_online_state =", table.tostring(player_online))
 	return player_online
 end
 
 function hall_logic.get_room_inst_list(ctx, req)
+
 	local room_id = req
-	
+	local room_inst_list = db_helper.call(DB_SERVICE.game, "room.get_room_list", room_id)
+
+	local reply = { room_insts = {} }
+	for _, v in pairs(room_inst_list) do
+		table.insert(reply.room_insts, { roomproxy = v.roomproxy, player_num = v.player_num, player_limit = v.player_limit})
+	end
+
+	return reply
 end
 
 return hall_logic

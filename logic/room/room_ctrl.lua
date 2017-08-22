@@ -73,6 +73,15 @@ local function init_room()
 	db_helper.call(DB_SERVICE.game, "room.register_room", nil, room_inst_info)
 end
 
+function room_ctrl.init()
+	server_id = tonumber(skynet.getenv("cluster_server_id"))
+	current_conf = cluster_config[server_id]
+	configs = require("config."..game_conf.module_name.."_config")
+	init_desk_pool()
+	init_agent_pool()
+	init_room()
+end
+
 function room_ctrl.get_configs()
 	return configs
 end
@@ -87,13 +96,13 @@ function room_ctrl.cast_login(ctx, player_info)
 
 end
 
-function room_ctrl.init()
-	server_id = tonumber(skynet.getenv("cluster_server_id"))
-	current_conf = cluster_config[server_id]
-	configs = require("config."..game_conf.module_name.."_config")
-	init_desk_pool()
-	init_agent_pool()
-	init_room()
+function room_ctrl.enter_room(ctx, req)
+	
 end
+
+function room_ctrl.exit_room(ctx, req)
+	
+end
+
 
 return room_ctrl

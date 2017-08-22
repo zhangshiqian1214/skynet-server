@@ -61,12 +61,12 @@ function command.init(configs)
 	config_db.init(configs)
 	init_modules()
 	register_login_and_logout()
-	agent_ctrl.init(current_conf)
 end
 
 function service.on_start()
 	local server_id = tonumber(skynet.getenv("cluster_server_id"))
 	current_conf = cluster_config[server_id]
+	agent_ctrl.init(current_conf)
 end
 
 service.start()

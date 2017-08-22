@@ -67,8 +67,10 @@ function hall_ctrl.get_player_online_state(ctx, req)
 end
 
 function hall_ctrl.get_room_inst_list(ctx, req)
+	print("hall_ctrl.get_room_inst_list ctx=", table.tostring(ctx), "req=", req)
 	local svc = get_logic_svc()
 	local reply = context.call(svc, "get_room_inst_list", ctx, req)
+	print("hall_ctrl.get_room_inst_list reply=", table.tostring(reply))
 	return SYSTEM_ERROR.success, reply 
 end
 

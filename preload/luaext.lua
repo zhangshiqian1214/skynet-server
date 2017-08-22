@@ -62,6 +62,56 @@ function copy(object)
     return new
 end
 
+function string.utf8len(str)
+    local len  = #str
+    local left = len
+    local cnt  = 0
+    local arr  = {0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc}
+    while left ~= 0 do
+        local tmp = string.byte(str, -left)
+        local i   = #arr
+        while arr[i] do
+            if tmp >= arr[i] then
+                left = left - i
+                break
+            end
+            i = i - 1
+        end
+        cnt = cnt + 1
+    end
+    return cnt
+end
+
+function string.utf8sub(str, start, last)
+    if start > last then
+        return ""
+    end
+    local len  = #str
+    local left = len
+    local cnt  = 0
+    local startByte = len + 1
+    local arr  = {0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc}
+    while left ~= 0 do
+        local tmp = string.byte(str, -left)
+        local i   = #arr        
+        while arr[i] do
+            if tmp >= arr[i] then
+                left = left - i
+                break
+            end
+            i = i - 1
+        end
+        cnt = cnt + 1
+        if cnt == start then
+            startByte = len - (left + i) + 1
+        end
+        if cnt == last then
+            return string.sub(str, startByte, len - left)
+        end
+    end
+    return string.sub(str, startByte, len)
+end
+
 function table.empty(t)
 	return _G.next(t) == nil
 end

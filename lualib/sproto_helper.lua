@@ -5,18 +5,31 @@ local sproto = require "sproto"
 local sproto_helper = {}
 local sp_pool = {}
 
-local toboolean
-local base_type = {
-	["integer"] = tonumber ,
-	["string"] = tostring ,
-	["boolean"] = toboolean ,
+local pack_base_type = {
+	["integer"] = function(data) return string.pack(">i", data) end,
+	["string"] = function(data) return string.pack(">s2", data) end,
+	["boolean"] = function(data)
+		if data == true then
+			return string.pack(">B", 1)
+		elseif data == false then
+			return string.pack(">B", 2)
+		end
+		return string.pack(">B", 0)
+	end,
 }
 
-local function toboolean(v)
-	if v == "true" then return true end
-	if v == "false" then return false end
-	return nil
-end
+local unpack_base_type = {
+	["integer"] = function(data) return string.unpack(">i", data) end,
+	["string"] = function(data) return string.unpack(">s2", data) end,
+	["boolean"] = function(data)
+		 local bool_type = string.unpack(">B", data)
+		 if bool_type == 0 then return nil end
+		 if bool_type == 1 then return true end
+		 if bool_type == 2 then return false end
+	end ,
+}
+
+
 
 local function get_sproto_sp(module)
 	if sp_pool[module] then
@@ -66,16 +79,16 @@ function sproto_helper.unpack_data(header, content)
 
 	local result
 	if header.response == 1 and proto.response and content and #content > 0 then
-		local switch_func = base_type[proto.response]
-		if switch_func then
-			result = switch_func(content)
+		local unpack_func = unpack_base_type[proto.response]
+		if unpack_func then
+			result = unpack_func(content)
 		else
 			result = sp:decode(proto.response, content)
 		end
 	elseif proto.request and content and #content > 0 then
-		local switch_func = base_type[proto.request]
-		if switch_func then
-			result = switch_func(content)
+		local unpack_func = unpack_base_type[proto.request]
+		if unpack_func then
+			result = unpack_func(content)
 		else
 			result = sp:decode(proto.request, content)
 		end
@@ -100,17 +113,17 @@ function sproto_helper.pack(header, data)
 	end
 
 	if header.response == 0 and proto.request and data then
-		local switch_func = base_type[proto.request]
-		if switch_func then
-			binary = binary .. tostring(data)
+		local pack_func = pack_base_type[proto.request]
+		if pack_func then
+			binary = binary .. pack_func(data)
 		else
 			binary = binary .. sp:encode(proto.request, data)
 		end
 		
 	elseif proto.response and data then
-		local switch_func = base_type[proto.response]
-		if switch_func then
-			binary = binary .. tostring(data)
+		local pack_func = pack_base_type[proto.response]
+		if pack_func then
+			binary = binary .. pack_func(data)
 		else
 			binary = binary .. sp:encode(proto.response, data)
 		end
@@ -135,16 +148,16 @@ function sproto_helper.unpack(msg, size)
 
 	local result
 	if header.response == 1 and proto.response and content and #content > 0 then
-		local switch_func = base_type[proto.response]
-		if switch_func then
-			result = switch_func(content)
+		local unpack_func = unpack_base_type[proto.response]
+		if unpack_func then
+			result = unpack_func(content)
 		else
 			result = sp:decode(proto.response, content)
 		end
 	elseif proto.request and content and #content > 0 then
-		local switch_func = base_type[proto.request]
-		if switch_func then
-			result = switch_func(content)
+		local unpack_func = unpack_base_type[proto.request]
+		if unpack_func then
+			result = unpack_func(content)
 		else
 			result = sp:decode(proto.request, content)
 		end

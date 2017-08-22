@@ -63,7 +63,7 @@ function client_msg.dispatch(c, header, msg)
 
 	--非游戏服务
 	if proto.service then
-		if proto.service == SERVICE.ROOM then
+		if proto.server == SERVER.GAME then
 			rpc_err = context.rpc_call(header.roomproxy, SERVICE.ROOM, "dispatch_client_msg", ctx, msg)
 		else
 			local target_node = cluster_monitor.get_cluster_node_by_server(proto.server)
@@ -74,9 +74,12 @@ function client_msg.dispatch(c, header, msg)
 			end
 			rpc_err = context.rpc_call(target_node.nodename, proto.service, "dispatch_client_msg", ctx, msg)
 		end
-		
 	else
-		rpc_err = context.rpc_call(c.agentnode, c.agentaddr, "dispatch_client_msg", ctx, msg)
+		if proto.is_agent then
+			rpc_err = context.rpc_call(c.agentnode, c.agentaddr, "dispatch_client_msg", ctx, msg)
+		else
+			rpc_err = context.rpc_call(header.roomproxy, c.deskaddr, "dispatch_client_msg", ctx, msg)
+		end
 	end
 
 	if rpc_err ~= RPC_ERROR.success then

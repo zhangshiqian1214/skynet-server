@@ -30,9 +30,10 @@ end
 function room_db.get_room_list(room_id)
 	local reply = {}
 	local redisdb = db_mgr.get_redis_db()
-	local room_list = array_totable(redisdb:zrange(get_room_list_key(room_id), 0, -1))
+	local room_list = redisdb:zrange(get_room_list_key(room_id), 0, -1)
 	for k, v in pairs(room_list) do
-		table.insert(reply, room_db.get_room_inst(k))
+		local inst = room_db.get_room_inst(tonumber(v))
+		table.insert(reply, inst)
 	end
 	return reply
 end
