@@ -1,8 +1,9 @@
---
--- Author: Kuzhu1990
--- Date: 2017-06-27 18:52:11
--- 服务器日志系统
--- 
+--[[
+	@ filename : logger.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
 
 local skynet = require "skynet"
 local assert = assert

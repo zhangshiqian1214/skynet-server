@@ -1,3 +1,10 @@
+--[[
+	@ filename : sproto_helper.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
+
 local proto_map = require "proto_map"
 local sprotoloader = require "sprotoloader"
 local sproto = require "sproto"

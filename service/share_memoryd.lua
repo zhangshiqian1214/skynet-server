@@ -1,8 +1,9 @@
---
--- Author: Kuzhu1990
--- Date: 2017-06-16 18:52:11
--- 进程间内存共享
--- 
+--[[
+	@ filename : share_memoryd.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
 
 local skynet = require "skynet"
 local stm    = require "skynet.stm"

@@ -49,3 +49,13 @@ local roomListReq = {
 	data = 10101,
 }
 print("roomListReq="..json.encode(roomListReq))
+
+local enterRoomReq = {
+	header = {
+		protoid = 0x0401,
+		session = 2,
+		response = nil,
+		roomproxy = "xpnn",
+	},
+}
+print("enterRoomReq="..json.encode(enterRoomReq))

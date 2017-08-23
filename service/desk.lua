@@ -1,3 +1,10 @@
+--[[
+	@ filename : desk.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
+
 local skynet = require "skynet"
 local service = require "service_base"
 local cluster_monitor = require "cluster_monitor"
@@ -38,6 +45,10 @@ function command.init(configs)
 	config_db.init(configs)
 	init_modules(modulename)
 	desk_ctrl.init()
+end
+
+function command.add_player(ctx)
+	desk_ctrl.add_player(ctx)
 end
 
 function service.on_start()

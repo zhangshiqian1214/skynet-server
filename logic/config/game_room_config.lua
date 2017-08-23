@@ -1,6 +1,6 @@
 --[[
-	房间id, 游戏id, 房间类型, 房间名称, 底注, 最小入场
-	room_id, game_id, room_type, room_name, init_bet, min_enter
+	房间id, 游戏id, 房间类型, 房间名称, 底注, 最小入场, 分组方式, 最小分组, 最大分组
+	room_id, game_id, room_type, room_name, init_bet, min_enter, group_type, min_group_player, max_group_player
 ]]
 local game_room_config = {
 	[10101] = {
@@ -10,6 +10,9 @@ local game_room_config = {
 			room_name = [[平民场]],
 			init_bet = 0.10,
 			min_enter = 30.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10102] = {
 			room_id = 10102,
@@ -18,6 +21,9 @@ local game_room_config = {
 			room_name = [[小资场]],
 			init_bet = 1.00,
 			min_enter = 50.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10103] = {
 			room_id = 10103,
@@ -26,6 +32,9 @@ local game_room_config = {
 			room_name = [[老板场]],
 			init_bet = 5.00,
 			min_enter = 300.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10104] = {
 			room_id = 10104,
@@ -34,6 +43,9 @@ local game_room_config = {
 			room_name = [[富豪场]],
 			init_bet = 10.00,
 			min_enter = 600.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10201] = {
 			room_id = 10201,
@@ -42,6 +54,9 @@ local game_room_config = {
 			room_name = [[平民场]],
 			init_bet = 0.10,
 			min_enter = 30.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 2,
 		},
 	[10202] = {
 			room_id = 10202,
@@ -50,6 +65,9 @@ local game_room_config = {
 			room_name = [[小资场]],
 			init_bet = 1.00,
 			min_enter = 50.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 2,
 		},
 	[10203] = {
 			room_id = 10203,
@@ -58,6 +76,9 @@ local game_room_config = {
 			room_name = [[老板场]],
 			init_bet = 5.00,
 			min_enter = 300.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 2,
 		},
 	[10204] = {
 			room_id = 10204,
@@ -66,6 +87,9 @@ local game_room_config = {
 			room_name = [[富豪场]],
 			init_bet = 10.00,
 			min_enter = 600.00,
+			group_type = 1,
+			min_group_player = 3,
+			max_group_player = 2,
 		},
 	[10301] = {
 			room_id = 10301,
@@ -74,6 +98,9 @@ local game_room_config = {
 			room_name = [[乞丐场]],
 			init_bet = 0.10,
 			min_enter = 2.00,
+			group_type = 2,
+			min_group_player = 3,
+			max_group_player = 3,
 		},
 	[10302] = {
 			room_id = 10302,
@@ -82,6 +109,9 @@ local game_room_config = {
 			room_name = [[平民场]],
 			init_bet = 0.50,
 			min_enter = 10.00,
+			group_type = 2,
+			min_group_player = 3,
+			max_group_player = 3,
 		},
 	[10303] = {
 			room_id = 10303,
@@ -90,6 +120,9 @@ local game_room_config = {
 			room_name = [[小资场]],
 			init_bet = 1.00,
 			min_enter = 18.00,
+			group_type = 2,
+			min_group_player = 3,
+			max_group_player = 3,
 		},
 	[10304] = {
 			room_id = 10304,
@@ -98,6 +131,9 @@ local game_room_config = {
 			room_name = [[老板场]],
 			init_bet = 3.00,
 			min_enter = 72.00,
+			group_type = 2,
+			min_group_player = 3,
+			max_group_player = 3,
 		},
 	[10305] = {
 			room_id = 10305,
@@ -106,6 +142,9 @@ local game_room_config = {
 			room_name = [[富豪场]],
 			init_bet = 5.00,
 			min_enter = 120.00,
+			group_type = 2,
+			min_group_player = 3,
+			max_group_player = 3,
 		},
 	[10306] = {
 			room_id = 10306,
@@ -114,6 +153,9 @@ local game_room_config = {
 			room_name = [[世家场]],
 			init_bet = 10.00,
 			min_enter = 240.00,
+			group_type = 2,
+			min_group_player = 3,
+			max_group_player = 3,
 		},
 	[10307] = {
 			room_id = 10307,
@@ -122,6 +164,9 @@ local game_room_config = {
 			room_name = [[帝王场]],
 			init_bet = 20.00,
 			min_enter = 480.00,
+			group_type = 2,
+			min_group_player = 3,
+			max_group_player = 3,
 		},
 	[10401] = {
 			room_id = 10401,
@@ -130,6 +175,9 @@ local game_room_config = {
 			room_name = [[平民场]],
 			init_bet = 0.10,
 			min_enter = 30.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10402] = {
 			room_id = 10402,
@@ -138,6 +186,9 @@ local game_room_config = {
 			room_name = [[小资场]],
 			init_bet = 1.00,
 			min_enter = 50.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10403] = {
 			room_id = 10403,
@@ -146,6 +197,9 @@ local game_room_config = {
 			room_name = [[老板场]],
 			init_bet = 5.00,
 			min_enter = 300.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10404] = {
 			room_id = 10404,
@@ -154,6 +208,9 @@ local game_room_config = {
 			room_name = [[富豪场]],
 			init_bet = 10.00,
 			min_enter = 600.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10501] = {
 			room_id = 10501,
@@ -162,6 +219,9 @@ local game_room_config = {
 			room_name = [[平民场]],
 			init_bet = 1.00,
 			min_enter = 50.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10502] = {
 			room_id = 10502,
@@ -170,6 +230,9 @@ local game_room_config = {
 			room_name = [[小资场]],
 			init_bet = 5.00,
 			min_enter = 200.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10503] = {
 			room_id = 10503,
@@ -178,6 +241,9 @@ local game_room_config = {
 			room_name = [[老板场]],
 			init_bet = 10.00,
 			min_enter = 1000.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 	[10504] = {
 			room_id = 10504,
@@ -186,6 +252,9 @@ local game_room_config = {
 			room_name = [[富豪场]],
 			init_bet = 20.00,
 			min_enter = 5000.00,
+			group_type = 1,
+			min_group_player = 2,
+			max_group_player = 5,
 		},
 }
 return game_room_config

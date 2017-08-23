@@ -1,3 +1,10 @@
+--[[
+	@ filename : agent.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
+
 local skynet = require "skynet"
 local service = require "service_base"
 local agent_ctrl = require "agent.agent_ctrl"
@@ -44,6 +51,7 @@ end
 
 
 function command.login(ctx, player_info)
+	print("recv agent login ctx=", table.tostring(ctx), "player_info=", table.tostring(player_info))
 	if current_conf.server_type == SERVER.HALL then
 		service.player_id = player_info.player_id
 		service.fd = ctx.fd
@@ -51,6 +59,16 @@ function command.login(ctx, player_info)
 	for _, callback in ipairs(login_callbacks) do
 		callback(ctx, player_info)
 	end
+end
+
+function command.logout(ctx)
+	for _, callback in ipairs(logout_callbacks) do
+		callback(ctx)
+	end
+end
+
+function command.reconnect(ctx)
+	return agent_ctrl.reconnect(ctx)
 end
 
 function command.update_configs(configs)
@@ -65,7 +83,8 @@ end
 
 function service.on_start()
 	local server_id = tonumber(skynet.getenv("cluster_server_id"))
-	current_conf = cluster_config[server_id]
+	-- current_conf = cluster_config[server_id]
+	current_conf = cluster_monitor.get_current_node()
 	agent_ctrl.init(current_conf)
 end
 

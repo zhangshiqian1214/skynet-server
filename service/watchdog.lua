@@ -1,3 +1,10 @@
+--[[
+	@ filename : watchdog.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
+
 local skynet = require "skynet"
 local proto_map = require "proto_map"
 local socket_msg = require "gate.socket_msg"

@@ -1,3 +1,123 @@
+#牛牛
+# 牌定义:
+# 方块(Diamond): 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 0x09 0x0a 0x0b 0x0c 0x0d 方块A-10 J Q K
+# 梅花(Club)   : 0x11 0x12 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 梅花A-10 J Q K
+# 红桃(Heart)  : 0x21 0x22 0x23 0x24 0x25 0x26 0x27 0x28 0x29 0x2a 0x2b 0x2c 0x2d 红桃A-10 J Q K
+# 黑桃(Spade)  : 0x31 0x32 0x33 0x34 0x35 0x36 0x37 0x38 0x39 0x3a 0x3b 0x3c 0x3d 黑桃A-10 J Q K
+# 王(Joker)    : 0x4E 0x4F 大小王
+
 .xpnn {
 	
+	#坐位状态: 0x00-SeatNull    0x01-SeatUnready 0x02-SeatReady 
+	#          0x04-SeatGameing 0x08-SeatOffline 0x10-SeatExit
+	.SeatState{
+		seat 0 : integer 
+		state 1 : integer
+	}
+
+	.PlayerInfo{
+		seat 0 : integer
+		player_id 1 : integer
+		nickname 2 : integer
+		head_id 3 : integer
+		head_url 4 : integer
+		sex 5 : integer
+		gold 6 : integer
+	}
+	
+	.SeatCards {
+		seat 0 : integer
+		cards 1 : *integer
+		card_type 2 : integer
+	}
+
+	#结算信息
+	.Winlost {
+		seat 0 : integer
+		winlost 1 : integer
+	}
+
+	.TableBase {
+		deal_id 0 : integer
+		game_state 1 : integer
+	}
+
+	.Table {
+		table_base 0 : TableBase
+		player_map 1 : PlayerInfo(seat)
+		seat_state_map 2 : SeatState(seat)
+
+		banker 3 : integer
+		qiang_times_map 4 : *integer #抢庄倍数
+		bet_times_map 5 : *integer #玩家投注倍数
+		player_cards_map 6 : *SeatCards(seat)
+
+		winlost_map 7 : *Winlost(seat)
+	}
+
+	.QryDeskReq {
+		
+	}
+
+	.QryDeskReply {
+		table_info 0 : Table
+	}
+
+	#抢庄
+	.QiangBankerReq {
+		times 0 : integer #抢庄倍数
+	}
+
+	.QiangBankerReply{
+
+	}
+
+	.BetReq{
+		times 0 : integer
+	}
+
+	.BetReply{
+
+	}
+
+	 .DealInfo{
+	 	table_info 0 : Table
+	 }
+
+	 .GameStartEvent{
+	 	cards 0 : *integer
+	 }
+
+	 #抢庄事件
+	 .QiangBankerEvent{
+	 	seat 0 : integer
+	 	times 1 : integer
+	 	banker 2 : integer
+	 }
+
+	 #投注事件
+	 .BetEvent{
+	 	seat 0 : integer
+	 	times 1 : integer
+	 }
+
+	 #发最后一张牌
+	 .DealCardEvent{
+	 	card 0 : integer
+	 }
+
+	 #开牌事件
+	 .OpenCardEvent{
+	 	seat 0 : integer 
+	 	card_type 1 : integer #牛牛牌型
+	 }
+
+	 #牌局结束事件
+	 .GameEndEvent{
+	 	player_map 0 : PlayerInfo(seat)
+	 	seat_state_map 1 : SeatState(seat)
+	 	player_cards_map 2 : *SeatCards(seat)
+	 	winlost_map 3 : *Winlost(seat)
+	 }
+
 }

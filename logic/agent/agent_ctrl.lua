@@ -1,5 +1,7 @@
 local skynet = require "skynet"
 local context = require "context"
+local db_helper = require "common.db_helper"
+local room_id = tonumber(skynet.getenv("room_id"))
 local agent_ctrl = {}
 
 local current_conf
@@ -8,11 +10,16 @@ function agent_ctrl.is_hall()
 	return current_conf.server_type == SERVER.HALL
 end
 
+function agent_ctrl.init(conf)
+	current_conf = conf
+end
+
 function agent_ctrl.on_login(ctx, player_info)
 	print("agent_ctrl.on_login ctx=", table.tostring(ctx), "player_info=", table.tostring(player_info))
 	
 	if not agent_ctrl.is_hall() then
 		local update_online_info = {
+			room_id = room_id,
 			agentnode = current_conf.nodename,
 			agentaddr = skynet.self(),
 			agentver = current_conf.ver,
@@ -27,8 +34,10 @@ function agent_ctrl.on_logout(ctx)
 
 end
 
-function agent_ctrl.init(conf)
-	current_conf = conf
+function agent_ctrl.reconnect(ctx)
+	
 end
+
+
 
 return agent_ctrl

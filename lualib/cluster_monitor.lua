@@ -1,8 +1,9 @@
---
--- Author: Kuzhu1990
--- Date: 2013-12-16 18:52:11
--- 集群节点
--- 
+--[[
+	@ filename : cluster_monitor.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
 
 local skynet = require "skynet"
 local share_memory = require "share_memory"
@@ -30,6 +31,7 @@ function cluster_monitor.get_current_node()
 	if not cluster_nodes then
 		return nil
 	end
+	-- print("get_current_node =", table.tostring(cluster_nodes[nodename]))
 	return cluster_nodes[nodename]
 end
 

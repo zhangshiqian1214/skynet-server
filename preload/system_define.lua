@@ -16,3 +16,8 @@ ACCOUNT_TYPE = {
 	normal = 1,
 	weixin = 2,
 }
+
+GROUP_TYPE = {
+	auto = 1,
+	ready = 2,
+}

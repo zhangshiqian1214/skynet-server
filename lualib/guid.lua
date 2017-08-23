@@ -1,3 +1,11 @@
+--[[
+	@ filename : guid.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
+
+
 local template ="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 return function()
         local data = io.open("/dev/urandom", "r"):read(4)

@@ -31,8 +31,16 @@ local files = {
   auth = "auth.sproto",
   hall = "hall.sproto",
   player = "player.sproto",
+  bank = "bank.sproto",
+  cash = "cash.sproto",
+  push = "push.sproto",
+  message = "message.sproto",
   room = "room.sproto",
   xpnn = "xpnn.sproto",
+  lrnn = "lrnn.sproto",
+  ddz = "ddz.sproto",
+  zjh = "zjh.sproto",
+  lrsh = "lrsh.sproto",
 }
 
 sprotoGen.create(files)

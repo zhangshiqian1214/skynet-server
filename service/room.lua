@@ -1,3 +1,10 @@
+--[[
+	@ filename : room.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
+
 require "skynet.manager"
 local skynet  = require "skynet"
 local service = require "service_base"

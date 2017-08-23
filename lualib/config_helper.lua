@@ -1,8 +1,8 @@
 --[[
-	@ filename : db_helper.lua
-	@ author   : kuzhu1990
-	@ modify   : 2017-03-25 10:53
-	@ company  : kuzhu1990@hotmail.com
+	@ filename : config_helper.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
 ]]
 
 local skynet = require "skynet"

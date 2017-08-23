@@ -1,8 +1,10 @@
---
--- Author: Kuzhu1990
--- Date: 2013-12-16 18:52:11
--- 连接器, 用于主动连接
--- 
+--[[
+	@ filename : connector.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
+
 
 local class = require "class"
 local skynet = require "skynet"

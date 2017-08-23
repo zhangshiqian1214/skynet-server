@@ -1,3 +1,11 @@
+--[[
+	@ filename : random.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
+
+
 local skynet = require "skynet"
 local mt19937 = require "mt19937"
 local random = {}

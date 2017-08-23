@@ -51,4 +51,11 @@ AUTH_ERROR = {
 	sex_nil            = add{code = 0x010d, desc = "性别为空"},
 }
 
+GAME_ERROR = {
+	in_other_game = add{code = 0x0d01, desc = "在其它游戏中"},
+	in_other_room = add{code = 0x0d01, desc = "在其它游戏房间中"},
+	in_other_room_inst = add{code = 0x0d02, desc = "在其它的房间实例中游戏"},
+	gold_not_enough = add{code = 0x0d03, desc = "游戏币不足"},
+}
+
 return errors

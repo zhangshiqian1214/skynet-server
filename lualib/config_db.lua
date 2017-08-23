@@ -1,8 +1,8 @@
 --[[
-	@ filename : db_helper.lua
-	@ author   : zhangshiqian1214@163.com (kuzhu)
-	@ modify   : 2017-03-25 10:53
-	@ company  : zhangshiqian
+	@ filename : config_db.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
 ]]
 
 local sharedata_core = require "skynet.sharedata.corelib"

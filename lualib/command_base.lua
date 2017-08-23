@@ -1,8 +1,9 @@
---
--- Author: Kuzhu1990
--- Date: 2013-12-16 18:52:11
--- 服务调用方法基类
--- 
+--[[
+	@ filename : command_base.lua
+	@ author   : zhangshiqian1214@163.com
+	@ modify   : 2017-08-23 17:53
+	@ company  : zhangshiqian1214
+]]
 
 require("debug")
 local skynet = require "skynet"

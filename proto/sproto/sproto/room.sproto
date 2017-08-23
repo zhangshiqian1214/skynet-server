@@ -1,3 +1,10 @@
 .room {
-	
+	.EnterRoomReply{
+		room_id 0 : integer
+		roomproxy 1 : string
+	}
+
+	.ExitRoomReply {
+		
+	}
 }
