@@ -157,7 +157,7 @@ function auth_ctrl.weixin_login(ctx, req)
 end
 
 function auth_ctrl.visitor_login(ctx, req)
-	print("recv visitor_login ctx=", table.tostring(ctx), "req=", table.tostring(req))
+	-- print("recv visitor_login ctx=", table.tostring(ctx), "req=", table.tostring(req))
 	if ctx.player_id then
 		return AUTH_ERROR.repeat_login
 	end
@@ -177,7 +177,7 @@ function auth_ctrl.visitor_login(ctx, req)
 
 	auth_ctrl.cast_login(ctx, reply.player)
 	request_sessions[ctx.session] = nil
-	print("visitor_login reply=", table.tostring(reply))
+	-- print("visitor_login reply=", table.tostring(reply))
 	return SYSTEM_ERROR.success, reply
 end
 

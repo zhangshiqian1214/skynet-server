@@ -79,6 +79,7 @@ function connector:connect()
 		ret = self._connect_func(self._connect_conf)
 	end, debug.traceback)
 	if not ok or not ret then
+		pcall(self._disconnect_cb, self._connect_conf)
 		return false
 	end
 

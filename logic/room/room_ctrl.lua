@@ -2,6 +2,7 @@ require "skynet.manager"
 local skynet = require "skynet"
 local context = require "context"
 local random = require "random"
+local cluster_monitor = require "cluster_monitor"
 local db_helper = require "common.db_helper"
 local game_config = require "config.game_config"
 local room_config = require "config.game_room_config"
@@ -51,7 +52,7 @@ local function init_desk()
 	if #desk_pool > 0 then
 		desk = table.remove(desk_pool, #desk_pool)
 	else
-		desk = skynet.launch("snlua", "agent")
+		desk = skynet.launch("snlua", "desk")
 		context.call(desk, "init", configs)
 	end
 	return desk
@@ -62,7 +63,8 @@ local function init_agent(ctx)
 	if #agent_pool > 0 then
 		agent = table.remove(agent_pool, #agent_pool)
 	else
-		agent = skynet.launch("snlua", "agent")
+		-- agent = skynet.launch("snlua", "agent")
+		agent = skynet.newservice("agent")
 		context.call(agent, "init", configs)
 	end
 	return agent
@@ -73,6 +75,7 @@ local function init_room()
 		server_id = server_id,
 		room_id = room_id,
 		roomproxy = current_conf.nodename,
+		ver = current_conf.ver,
 		player_num = 0,
 		player_limit = tonumber(skynet.getenv("player_limit")) or 600,
 	}
@@ -131,18 +134,17 @@ end
 
 function room_ctrl.enter_room(ctx, req)
 	local reply = {}
-
 	local player_online = db_helper.call(DB_SERVICE.hall, "hall.get_player_online", ctx.player_id)
-	if player_online.room_id and player_online.room_id ~= room_id then
-		reply.room_id = player_online.room_id
+	if player_online.room_id and tonumber(player_online.room_id) ~= room_id then
+		reply.room_id = tonumber(player_online.room_id)
 		reply.roomproxy = player_online.agentnode
-		local online_game_conf = game_config[player_online.room_id]
-		if online_game_conf.game_id ~= current_conf.game_id then
+		local tmp_room_conf = room_config[tonumber(player_online.room_id)]
+		if tmp_room_conf.game_id ~= room_conf.game_id then
 			return GAME_ERROR.in_other_game, reply
 		else
-			return GAME_ERROR.gameing_in_other_room, reply
+			return GAME_ERROR.in_other_room, reply
 		end
-	elseif player_online.agentnode ~= current_conf.nodename then
+	elseif player_online.agentnode and player_online.agentnode ~= current_conf.nodename then
 		reply.room_id = player_online.room_id
 		reply.roomproxy = player_online.agentnode
 		return GAME_ERROR.in_other_room_inst
@@ -156,12 +158,12 @@ function room_ctrl.enter_room(ctx, req)
 		using_agents[old_session] = nil
 		using_agents[ctx.session] = old_agent
 		player_session_map[ctx.player_id] = ctx.session
-		context.call(old_agent, "reconnect", ctx)
+		context.call(old_agent, "player_disconnect", ctx)
 
 		local group_id = player_group_map[ctx.player_id]
 		if room_conf.group_type == GROUP_TYPE.auto and group_id ~= nil then
 			local old_desk = using_desks[group_id]
-			context.call(old_desk, "reconnect", ctx)
+			context.call(old_desk, "player_disconnect", ctx)
 		end
 		return SYSTEM_ERROR.success, reply
 	end
@@ -172,11 +174,10 @@ function room_ctrl.enter_room(ctx, req)
 	end
 
 	local agent = init_agent(ctx)
-	using_agents[ctx.player_id] = ctx.session
+	using_agents[ctx.session] = agent
 	player_session_map[ctx.player_id] = ctx.session
-	print("enter_room player_info=", table.tostring(player_info), "agent=", agent)
 	context.call(agent, "login", ctx, player_info)
-	
+
 	return SYSTEM_ERROR.success, reply
 end
 
@@ -185,7 +186,6 @@ function room_ctrl.exit_room(ctx, req)
 	if not agent then
 		return SYSTEM_ERROR.success
 	end
-
 	local group_id = player_group_map[ctx.player_id]
 	if group_id then
 		local desk = using_desks[group_id]
@@ -206,6 +206,10 @@ function room_ctrl.exit_room(ctx, req)
 end
 
 function room_ctrl.group_request(ctx, req)
+	local agent = using_agents[ctx.session]
+	if not agent then
+		return GAME_ERROR.no_login_room
+	end
 	local group_id = get_joinable_group_id()
 	if room_conf.group_type == GROUP_TYPE.auto then
 		group_players_map[group_id] = group_players_map[group_id] or {}
@@ -213,9 +217,33 @@ function room_ctrl.group_request(ctx, req)
 		player_group_map[ctx.player_id] = group_id
 
 		local desk = get_desk_by_group_id(group_id)
-		context.call(desk, "add_player", ctx)
+
+		local ec = context.call(desk, "login_desk", ctx, agent)
+		if ec ~= SYSTEM_ERROR.success then
+			return ec
+		end
 	elseif room_conf.group_type == GROUP_TYPE.ready then
 
+	end
+	return SYSTEM_ERROR.success
+end
+
+function room_ctrl.logout_desk(ctx)
+	local agent = using_agents[ctx.session]
+	if not agent then
+		return GAME_ERROR.no_login_room
+	end
+	local group_id = player_group_map[ctx.player_id]
+	if not group_id then
+		return GAME_ERROR.no_login_desk
+	end
+	local desk = using_desks[group_id]
+	if not desk then
+		return GAME_ERROR.no_login_desk
+	end
+	local ec = context.call(desk, "logout_desk", ctx)
+	if ec ~= SYSTEM_ERROR.success then
+		return ec
 	end
 	return SYSTEM_ERROR.success
 end

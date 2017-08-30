@@ -2,6 +2,10 @@ function math.round(num)
     return math.floor(num + 0.5)
 end
 
+function math.pow(num, n)
+    return num ^ n
+end
+
 function tonum(v, base)
     return tonumber(v, base) or 0
 end
@@ -19,7 +23,12 @@ function totable(v)
     return v
 end
 
+
+
 function array_totable(array)
+    if not array then
+        return nil
+    end
     array = totable(array)
     local tb = {}
     for i=1,#array,2 do
@@ -60,6 +69,57 @@ function copy(object)
         end
      end
     return new
+end
+
+function string.split(str, delimiter)
+    str = tostring(str)
+    delimiter = tostring(delimiter)
+    if (delimiter=='') then return false end
+    local pos,arr = 0, {}
+    -- for each divider found
+    for st,sp in function() return string.find(str, delimiter, pos, true) end do
+        table.insert(arr, string.sub(str, pos, st - 1))
+        pos = sp + 1
+    end
+    table.insert(arr, string.sub(str, pos))
+    return arr
+end
+
+function string.ltrim(str)
+    return string.gsub(str, "^[ \t\n\r]+", "")
+end
+
+function string.rtrim(str)
+    return string.gsub(str, "[ \t\n\r]+$", "")
+end
+
+function string.trim(str)
+    str = string.gsub(str, "^[ \t\n\r]+", "")
+    return string.gsub(str, "[ \t\n\r]+$", "")
+end
+
+function string.ucfirst(str)
+    return string.upper(string.sub(str, 1, 1)) .. string.sub(str, 2)
+end
+
+local function urlencodeChar(char)
+    return "%" .. string.format("%02X", string.byte(c))
+end
+
+function string.urlencode(str)
+    -- convert line endings
+    str = string.gsub(tostring(str), "\n", "\r\n")
+    -- escape all characters but alphanumeric, '.' and '-'
+    str = string.gsub(str, "([^%w%.%- ])", urlencodeChar)
+    -- convert spaces to "+" symbols
+    return string.gsub(str, " ", "+")
+end
+
+function string.urldecode(str)
+    str = string.gsub (str, "+", " ")
+    str = string.gsub (str, "%%(%x%x)", function(h) return string.char(tonum(h,16)) end)
+    str = string.gsub (str, "\r\n", "\n")
+    return str
 end
 
 function string.utf8len(str)
@@ -116,6 +176,52 @@ function table.empty(t)
 	return _G.next(t) == nil
 end
 
+function table.nums(t)
+    local count = 0
+    for k, v in pairs(t) do
+        count = count + 1
+    end
+    return count
+end
+
+function table.keys(t)
+    local keys = {}
+    for k, v in pairs(t) do
+        keys[#keys + 1] = k
+    end
+    return keys
+end
+
+function table.values(t)
+    local values = {}
+    for k, v in pairs(t) do
+        values[#values + 1] = v
+    end
+    return values
+end
+
+--[[
+    table.zero(t, len) ==> memset(&t, 0, len)
+]]
+function table.zero(t, len)
+    assert(type(t) == "table")
+    for i=1, len do
+        t[i] = 0
+    end
+end
+
+--[[
+    table.malloc(len) ==> malloc(len)
+]]
+function table.malloc(len)
+    local t = {}
+    table.zero(t, len)
+    return t
+end
+
+--[[
+    {a=1, b=2} ==> {a, 1, b, 2}
+]]
 function table.toarray(tb)
     if type(tb) ~= "table" then return nil end
     local info = {}

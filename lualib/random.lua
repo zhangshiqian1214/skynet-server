@@ -14,7 +14,7 @@ local random_type = tonumber(skynet.getenv("random_type"))
 local __randomseed = os.time() + skynet.self()
 
 
-function random.randi(i, j)
+function random.rand(i, j)
 	__randomseed = __randomseed + 1
 	if random_type == RANDOM_TYPE.mt_19937 then --随机性低,快
 		mt19937.init(__randomseed)
@@ -39,11 +39,22 @@ function random.randi(i, j)
 end
 
 function random.random_one(list)
-	return list[random.randi(1, #list)]
+	return list[random.rand(1, #list)]
 end
 
 function random.random_shuffle(list)
-	
+	local array = copy(list)
+    local length = #array
+    local function swap(i, j)
+        local tmp = clone(array[i])
+        array[i] = array[j]
+        array[j] = tmp
+    end
+    for i=1, length-1 do
+        local j = random.rand(i+1, length)
+        swap(i, j)
+    end
+    return array
 end
 
 return random

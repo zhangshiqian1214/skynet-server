@@ -13,6 +13,10 @@ skynet.start(function()
 
 	skynet.uniqueservice("auth")
 
+	local webclient = skynet.uniqueservice("webclient")
+	local url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code"
+	print(skynet.call(webclient, "lua", "request", url))
+
 	cluster_monitor.open()
 
 	skynet.error("loginserver start ok")

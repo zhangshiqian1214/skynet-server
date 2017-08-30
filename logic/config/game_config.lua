@@ -14,10 +14,10 @@ local game_config = {
 	[102] = {
 			game_id = 102,
 			game_type = 100,
-			game_name = [[二人牛牛]],
+			game_name = [[龙虎斗]],
 			is_open = 1,
-			show_index = 4,
-			module_name = "lrnn",
+			show_index = 3,
+			module_name = "lhd",
 		},
 	[103] = {
 			game_id = 103,
@@ -26,22 +26,6 @@ local game_config = {
 			is_open = 1,
 			show_index = 1,
 			module_name = "ddz",
-		},
-	[104] = {
-			game_id = 104,
-			game_type = 100,
-			game_name = [[炸金花]],
-			is_open = 1,
-			show_index = 3,
-			module_name = "zjh",
-		},
-	[105] = {
-			game_id = 105,
-			game_type = 100,
-			game_name = [[二人梭哈]],
-			is_open = 1,
-			show_index = 5,
-			module_name = "lrsh",
 		},
 }
 return game_config

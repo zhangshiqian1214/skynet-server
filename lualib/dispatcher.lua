@@ -77,7 +77,7 @@ local function _dispatch_client_msg(ctx, header, data)
 	local ec, reply
 	if service_base.is_agent then
 		local ret = {}
-		cs(lockFunc, ret, func, ctx, data)
+		cs(queue_func, ret, func, ctx, data)
 		ec = ret[1]
 		reply = ret[2]
 	else
@@ -157,27 +157,17 @@ function dispatcher.dispatch_service_msg(method, ...)
 		return SYSTEM_ERROR.func_not_impl
 	end
 
-	local ec, reply
+	local ret1, ret2
 	if service_base.is_agent then
 		local ret = {}
-		cs(lockFunc, ret, func, ctx, data)
-		ec = ret[1]
-		reply = ret[2]
+		cs(queue_func, ret, func, ctx, data)
+		ret1 = ret[1]
+		ret2 = ret[2]
 	else
-		ec, reply = call_func(func, ctx, data)
+		ret1, ret2 = call_func(func, ctx, data)
 	end
 
-	if ec == SYSTEM_ERROR.forward then
-		return SYSTEM_ERROR.forward
-	elseif ec ~= SYSTEM_ERROR.success then
-		if ec == nil then
-			logger.errorf("proto[%s] not return error code", method)
-			ec = SYSTEM_ERROR.unknow
-		end
-		logger.infof("the implement of proto[%s] return error[%s]", method, errmsg(ec))		
-	end
-	logger.debugf("proto[%s] ret = [%s]", method, errmsg(ec))
-	return ec, reply
+	return ret1, ret2
 end
 
 skynet.register_protocol {

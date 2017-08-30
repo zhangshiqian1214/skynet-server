@@ -21,3 +21,4 @@ GROUP_TYPE = {
 	auto = 1,
 	ready = 2,
 }
+

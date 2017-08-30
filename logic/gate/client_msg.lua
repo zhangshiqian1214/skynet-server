@@ -45,7 +45,7 @@ function client_msg.dispatch(c, header, msg)
 		return
 	end
 
-	if proto.server == SERVER.GAME and not header.roomproxy then
+	if proto.server == SERVER.GAME and not c.agentnode and not header.roomproxy then
 		header.errorcode = SYSTEM_ERROR.unknow_roomproxy
 		client_msg.send(c.fd, header)
 		return
@@ -58,30 +58,53 @@ function client_msg.dispatch(c, header, msg)
 		return
 	end
 
-	local rpc_err
+	local nodename, service
+	local target_node
 	local ctx = client_msg.get_context(c)
 
-	--非游戏服务
 	if proto.service then
 		if proto.server == SERVER.GAME then
-			rpc_err = context.rpc_call(header.roomproxy, SERVICE.ROOM, "dispatch_client_msg", ctx, msg)
+			nodename = c.agentnode or header.roomproxy
+			service = proto.service
 		else
-			local target_node = cluster_monitor.get_cluster_node_by_server(proto.server)
-			if not target_node then
+			target_node = cluster_monitor.get_cluster_node_by_server(proto.server)
+			if not target_node or target_node.is_online == 0 then
 				header.errorcode = SYSTEM_ERROR.service_maintance
 				client_msg.send(c.fd, header)
 				return
 			end
-			rpc_err = context.rpc_call(target_node.nodename, proto.service, "dispatch_client_msg", ctx, msg)
+			nodename = target_node.nodename
+			service = proto.service
 		end
-	else
-		if proto.is_agent then
-			rpc_err = context.rpc_call(c.agentnode, c.agentaddr, "dispatch_client_msg", ctx, msg)
-		else
-			rpc_err = context.rpc_call(header.roomproxy, c.deskaddr, "dispatch_client_msg", ctx, msg)
+	else --属于agent或游戏台agent
+		if proto.is_agent then --玩家agent,在游戏中则使用游戏agent,否则使用大厅的agent
+			if c.agentnode and c.agentver then
+				target_node	= cluster_monitor.get_cluster_node(c.agentnode)
+				if target_node and c.agentver < target_node.ver then
+					c.agentnode = nil
+					c.agentaddr = nil
+					c.agentver = nil
+				end
+			end
+			nodename = c.agentnode or c.hall_agentnode
+			service = c.agentaddr or c.hall_agentaddr
+		else --游戏台agent
+			nodename = c.agentnode or header.roomproxy
+			service = c.deskaddr
 		end
 	end
+	
+	if not target_node then
+		target_node	= cluster_monitor.get_cluster_node(nodename)
+	end
 
+	if not target_node or target_node.is_online == 0 then
+		header.errorcode = SYSTEM_ERROR.service_maintance
+		client_msg.send(c.fd, header)
+		return
+	end
+
+	local rpc_err = context.rpc_call(nodename, service, "dispatch_client_msg", ctx, msg)
 	if rpc_err ~= RPC_ERROR.success then
 		header.errorcode = SYSTEM_ERROR.service_stoped
 		client_msg.send(c.fd, header)

@@ -20,7 +20,7 @@ end
 local function init_agent_pool()
 	local agent_count = skynet.getenv("agent_count")
 	for i=1, agent_count do
-		local agent = skynet.launch("snlua","agent")
+		local agent = skynet.newservice("agent")
 		skynet.name(".agent"..i, agent)
 		context.call(agent, "init", configs)
 		table.insert(agent_pool, agent)
@@ -50,7 +50,7 @@ end
 
 function hall_ctrl.cast_login(ctx, req)
 	assert(ctx.player_id == nil, "player repeat login")
-	print("cast_login ctx=", table.tostring(ctx), "req=", table.tostring(req))
+	-- print("cast_login ctx=", table.tostring(ctx), "req=", table.tostring(req))
 	local svc = get_logic_svc()
 	context.call(svc, "cast_login", ctx, req)
 	
@@ -67,10 +67,10 @@ function hall_ctrl.get_player_online_state(ctx, req)
 end
 
 function hall_ctrl.get_room_inst_list(ctx, req)
-	print("hall_ctrl.get_room_inst_list ctx=", table.tostring(ctx), "req=", req)
+	-- print("hall_ctrl.get_room_inst_list ctx=", table.tostring(ctx), "req=", req)
 	local svc = get_logic_svc()
 	local reply = context.call(svc, "get_room_inst_list", ctx, req)
-	print("hall_ctrl.get_room_inst_list reply=", table.tostring(reply))
+	-- print("hall_ctrl.get_room_inst_list reply=", table.tostring(reply))
 	return SYSTEM_ERROR.success, reply 
 end
 

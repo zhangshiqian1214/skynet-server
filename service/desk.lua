@@ -19,23 +19,24 @@ service.is_agent = true
 
 local server_id
 local current_conf
+local module_ctrl
 
-local modules
+-- local modules
 
-local function init_modules()
-	modules = require("config."..modulename.."_module")
-	setmetatable(service.modules, {
-		__index = function(t, k)
-			local mod = modules[k]
-			if not mod then
-				return nil
-			end
-			local v = require(mod)
-			t[k] = v
-			return v
-		end
-	})
-end
+-- local function init_modules()
+-- 	modules = require("config."..modulename.."_module")
+-- 	setmetatable(service.modules, {
+-- 		__index = function(t, k)
+-- 			local mod = modules[k]
+-- 			if not mod then
+-- 				return nil
+-- 			end
+-- 			local v = require(mod)
+-- 			t[k] = v
+-- 			return v
+-- 		end
+-- 	})
+-- end
 
 function command.update_configs(configs)
 	config_db.update(configs)
@@ -43,12 +44,25 @@ end
 
 function command.init(configs)
 	config_db.init(configs)
-	init_modules(modulename)
 	desk_ctrl.init()
+	module_ctrl = require(modulename.."."..modulename.."_ctrl")
+	module_ctrl.init()
 end
 
-function command.add_player(ctx)
-	desk_ctrl.add_player(ctx)
+function command.login_desk(ctx, agent)
+	return desk_ctrl.login_desk(ctx, agent)
+end
+
+function command.logout_desk(ctx)
+	return desk_ctrl.logout_desk(ctx)
+end
+
+function command.player_reconnect(ctx)
+	return desk_ctrl.player_reconnect(ctx)
+end
+
+function command.player_disconnect(ctx)
+	return desk_ctrl.player_disconnect(ctx)
 end
 
 function service.on_start()
@@ -56,4 +70,6 @@ function service.on_start()
 	current_conf = cluster_config[server_id]
 end
 
+service.modules.desk = require("desk.desk_impl")
+service.modules[modulename] = require(modulename.."."..modulename.."_impl")
 service.start()

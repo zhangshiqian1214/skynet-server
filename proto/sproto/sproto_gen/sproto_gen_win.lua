@@ -36,6 +36,7 @@ local files = {
   push = "push.sproto",
   message = "message.sproto",
   room = "room.sproto",
+  desk = "desk.sproto",
   xpnn = "xpnn.sproto",
   lrnn = "lrnn.sproto",
   ddz = "ddz.sproto",

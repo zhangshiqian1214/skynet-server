@@ -10,10 +10,9 @@ MODULE = {
 	MESSAGE  = { id = 0x07, name = "message", server = nil, service = nil, is_agent = true},
 
 	ROOM     = { id = 0x0d, name = "room", server = SERVER.GAME, service = SERVICE.ROOM },
+	DESK     = { id = 0x0e, name = "desk", server = SERVER.GAME, service = nil },
 	XPNN     = { id = 0x10, name = "xpnn", server = SERVER.GAME, service = nil },
-	LRNN     = { id = 0x11, name = "lrnn", server = SERVER.GAME },
-	DDZ      = { id = 0x12, name = "ddz", server = SERVER.GAME },
-	ZJH      = { id = 0x13, name = "zjh", server = SERVER.GAME },
-	LRSH     = { id = 0x14, name = "lrsh", server = SERVER.GAME },
+	LHD      = { id = 0x11, name = "lhd", server = SERVER.GAME, service = nil },
+	DDZ      = { id = 0x12, name = "ddz", server = SERVER.GAME, service = nil },
 
 }

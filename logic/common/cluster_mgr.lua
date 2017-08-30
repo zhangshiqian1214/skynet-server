@@ -63,7 +63,14 @@ end
 
 --断开连接回调
 local function _disconnect_callback(conf)
-	-- print("_disconnect_callback nodename=", conf.nodename)
+	
+	local cluster_nodes =  share_memory["cluster_nodes"]
+	local cluster_conf  = cluster_nodes[conf.nodename]
+	if cluster_conf.is_online == 0 then
+		return
+	end
+	cluster_conf.is_online = 0
+	share_memory["cluster_nodes"] = cluster_nodes
 
 	for addr, _ in pairs(_subscribe_cluster_map) do
 		skynet.call(addr, "lua", "monitor_node_change", conf)
@@ -249,19 +256,19 @@ function cluster_mgr.reset_connectors()
 		end
 	end
 
-	local removeList = {}
+	local remove_list = {}
 	for name, v in pairs(_connector_map) do
 		if not cluster_nodes[name] then
 			v:stop()
 			v:reset()
-			table.insert(removeList, name)
+			table.insert(remove_list, name)
 		end
 	end
 
-	for _, name in pairs(removeList) do
+	for _, name in pairs(remove_list) do
 		_connector_map[name] = nil
 	end
-	removeList = nil
+	remove_list = nil
 end
 
 -------------------------------init---------------------------

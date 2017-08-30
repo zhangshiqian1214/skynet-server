@@ -53,9 +53,21 @@ AUTH_ERROR = {
 
 GAME_ERROR = {
 	in_other_game = add{code = 0x0d01, desc = "在其它游戏中"},
-	in_other_room = add{code = 0x0d01, desc = "在其它游戏房间中"},
-	in_other_room_inst = add{code = 0x0d02, desc = "在其它的房间实例中游戏"},
-	gold_not_enough = add{code = 0x0d03, desc = "游戏币不足"},
+	in_other_room = add{code = 0x0d02, desc = "在其它游戏房间中"},
+	in_other_room_inst = add{code = 0x0d03, desc = "在其它的房间实例中游戏"},
+	gold_not_enough = add{code = 0x0d04, desc = "游戏币不足"},
+	no_login_room = add{code = 0x0d05, desc = "请先进入房间"},
+	no_login_desk = add{code = 0x0d06, desc = "未进入游戏台"},
+	desk_full = add{code = 0x0d07, desc = "游戏台已满"},
+	desk_no_player = add{code = 0x0d08, desc = "玩家不在游戏台"},
+	player_gaming = add{code = 0x0d09, desc = "玩家正在游戏"},
 }
+
+DESK_ERROR = {
+	player_no_seat = add{code = 0x0e01, desc = "玩家未在坐位上"},
+	game_has_begin = add{code = 0x0e02, desc = "游戏已经开始"},
+	game_state_limit = add{code = 0x0e03, desc = "游戏状态限制"},
+}
+
 
 return errors

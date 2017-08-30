@@ -9,6 +9,7 @@ local skynet = require "skynet"
 local cluster = require "skynet.cluster"
 local cluster_monitor = require "cluster_monitor"
 local logger = require "logger"
+local sproto_helper = require "sproto_helper"
 local requester = {}
 
 function requester.call(service, cmd, ...)
@@ -74,15 +75,18 @@ function requester.rpc_send(node, service, cmd, ...)
 	return RPC_ERROR.success
 end
 
-function requester.send_to_client(ctx, proto, header, data)
+function requester.send_client_msg(ctx, proto, header, data)
 	if not ctx or not proto then
 		return
 	end
-	if not header then
-		header = {}
-		header.proto_id = proto.id
+	header = header or {}
+	header.protoid = proto.id
+	local buffer = sproto_helper.pack(header, data)
+	if not buffer then
+		print("send_client_msg proto=", table.tostring(proto), "data=", table.tostring(data))
+		return
 	end
-	requester.rpc_call(ctx.gate, ctx.watchdog, "send_to_client", ctx, header, data)
+	requester.rpc_call(ctx.gate, ctx.watchdog, "send_client_msg", ctx.fd, buffer)
 end
 
 

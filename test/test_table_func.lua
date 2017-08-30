@@ -9,3 +9,5 @@ local tb = {
 table.insert(tb, 1, "zhangsan")
 
 print(table.unpack(tb))
+
+print(1.00 == 1)

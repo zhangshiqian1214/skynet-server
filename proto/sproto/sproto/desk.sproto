@@ -1,0 +1,14 @@
+.desk{
+	
+
+	.AddCdEvent{
+		id 0 : integer
+		cd_type 1 : integer
+		cd_time 2 : integer
+	}
+
+	.DelCdEvent{
+		id 0 : integer
+		cd_type 1 : integer
+	}
+}

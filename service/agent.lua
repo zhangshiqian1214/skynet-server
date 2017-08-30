@@ -51,7 +51,7 @@ end
 
 
 function command.login(ctx, player_info)
-	print("recv agent login ctx=", table.tostring(ctx), "player_info=", table.tostring(player_info))
+	ctx.player_id = player_info.player_id
 	if current_conf.server_type == SERVER.HALL then
 		service.player_id = player_info.player_id
 		service.fd = ctx.fd
@@ -76,16 +76,20 @@ function command.update_configs(configs)
 end
 
 function command.init(configs)
+	-- local server_id = tonumber(skynet.getenv("cluster_server_id"))
+	-- current_conf = cluster_monitor.get_current_node()
+	
 	config_db.init(configs)
 	init_modules()
 	register_login_and_logout()
+
+	agent_ctrl.init(current_conf)
 end
 
 function service.on_start()
-	local server_id = tonumber(skynet.getenv("cluster_server_id"))
-	-- current_conf = cluster_config[server_id]
+	-- print("agent 111")
 	current_conf = cluster_monitor.get_current_node()
-	agent_ctrl.init(current_conf)
+	-- print("agent 222 current_conf=", current_conf)
 end
 
 service.start()

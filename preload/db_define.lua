@@ -10,6 +10,10 @@ DB_SERVICE = {
 	hall = "hall_db",
 	game = "game_db",
 	agent = "agent_db",
+}
 
-
+CACHE_TYPE = {
+	memory = 0,
+	redis = 1,
+	mysql = 2,
 }

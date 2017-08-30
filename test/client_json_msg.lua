@@ -40,6 +40,19 @@ local visitorReq = {
 }
 print("visitorReq="..json.encode(visitorReq))
 
+local visitorReq = {
+	header = {
+		protoid = 0x0104,
+		session = 1,
+		response = nil,
+	},
+	data = {
+		visit_token = "b4a7d645-f3c9-472e-c76c-14c09b8596c8",
+	},
+}
+print("visitorReq="..json.encode(visitorReq))
+
+
 local roomListReq = {
 	header = {
 		protoid = 0x0201,
@@ -52,10 +65,30 @@ print("roomListReq="..json.encode(roomListReq))
 
 local enterRoomReq = {
 	header = {
-		protoid = 0x0401,
+		protoid = 0x0d01,
 		session = 2,
 		response = nil,
 		roomproxy = "xpnn",
 	},
 }
 print("enterRoomReq="..json.encode(enterRoomReq))
+
+exitRoomReq = {
+	header = {
+		protoid = 0x0d02,
+		session = 2,
+		response = nil,
+		roomproxy = "xpnn",
+	},
+}
+print("exitRoomReq="..json.encode(exitRoomReq))
+
+groupRequest = {
+	header = {
+		protoid = 0x0d03,
+		session = 2,
+		response = nil,
+		roomproxy = "xpnn",
+	},
+}
+print("groupRequest="..json.encode(groupRequest))

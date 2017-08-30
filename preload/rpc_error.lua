@@ -2,8 +2,15 @@ local errors = {}
 
 local function add(err)
 	assert(errors[err.code] == nil, string.format("have the same error code[%x], msg[%s]", err.code, err.desc))
-	errors[err.code] = {desc = err.desc}
+	errors[err.code] = { desc = err.desc }
 	return err.code
+end
+
+function rpc_errmsg(ec)
+	if not ec then
+		return "nil"
+	end
+	return errors[ec].desc
 end
 
 RPC_ERROR = {

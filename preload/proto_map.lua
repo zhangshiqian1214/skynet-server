@@ -17,7 +17,8 @@ PROTO_FILES = {
 	push    = 8,
 	message = 9,
 	room    = 10,
-	xpnn    = 11,
+	desk    = 11,
+	xpnn    = 12,
 }
 
 local proto_map = {
@@ -78,7 +79,7 @@ proto_map.hall = M_HALL
 --玩家
 M_PLAYER = {
 	module = MODULE.PLAYER,
-	get_player_info = {id = 0x0301, type = PROTO_TYPE.C2S, request = nil, response = "player.PlayerInfo", desc = "获取自已的玩家信息"},
+	qry_player_info = {id = 0x0301, type = PROTO_TYPE.C2S, request = nil, response = "player.PlayerInfo", desc = "获取自已的玩家信息"},
 	modify_head_info = {id = 0x0302, type = PROTO_TYPE.C2S, request = "player.ModifyHeadReq", response = nil, desc = "修改玩家头像"},
 	modify_nickname_info = {id = 0x0303, type = PROTO_TYPE.C2S, request = "player.NicknameReq", response = nil, desc = "修改昵称信息"},
 	get_alipay_info = {id = 0x0304, type = PROTO_TYPE.C2S, request = nil, response = "player.AliPayInfo", desc = "获取支付宝帐号信息"},
@@ -125,6 +126,8 @@ M_MESSAGE = {
 }
 proto_map.message = M_MESSAGE
 
+
+
 --房间
 M_ROOM = {
 	module = MODULE.ROOM,
@@ -134,9 +137,17 @@ M_ROOM = {
 }
 proto_map.room = M_ROOM
 
+M_DESK = {
+	module = MODULE.DESK,
+	
+	add_cd_event = {id = 0x0e01, type = PROTO_TYPE.S2C, request = nil, response = "desk.AddCdEvent", desc = "增加cd事件"},
+	del_cd_event = {id = 0x0e02, type = PROTO_TYPE.S2C, request = nil, request = "desk.DelCdEvent", desc = "删除cd事件"},
+}
+proto_map.desk = M_DESK
+
 --血拼牛牛
 M_XPNN = {
-	module = MODULE.XPNN
+	module = MODULE.XPNN,
 	qry_desk = {id = 0x1001, type = PROTO_TYPE.C2S, request = "xpnn.QryDeskReq", response = "xpnn.QryDeskReply", desc = "查询游戏台"},
 	qiang_banker = {id = 0x1002, type = PROTO_TYPE.C2S, request = "xpnn.QiangBankerReq", response = "xpnn.QiangBankerReply", desc = "抢庄"},
 	bet = {id = 0x1003, type = PROTO_TYPE.C2S, request = "xpnn.BetReq", response = "xpnn.BetReply", desc = "倍投"},
@@ -149,15 +160,16 @@ M_XPNN = {
 	deal_card_event = {id = 0x10a5, type = PROTO_TYPE.S2C, request = nil, response = "xpnn.DealCardEvent", desc = "发牌事件"},
 	open_card_event = {id = 0x10a6, type = PROTO_TYPE.S2C, request = nil, response = "xpnn.OpenCardEvent", desc = "开牌事件"},
 	game_end_event = {id = 0x10a7, type = PROTO_TYPE.S2C, request = nil, response = "xpnn.GameEndEvent", desc = "游戏结束事件"},
+	seat_state_event = {id = 0x10a8, type = PROTO_TYPE.S2C, request = nil, response = "xpnn.SeatStateEvent", desc = "坐位事件"},
 }
 proto_map.xpnn = M_XPNN
 
---二人牛牛
-M_LRNN = {
-	module = MODULE.LRNN
+--龙虎斗
+M_LHD = {
+	module = MODULE.LHD
 	
 }
-proto_map.lrnn = M_LRNN
+proto_map.lhd = M_LHD
 
 --斗地主
 M_DDZ = {
@@ -166,19 +178,5 @@ M_DDZ = {
 }
 proto_map.ddz = M_DDZ
 
-
---炸金花
-M_ZJH = {
-	module = MODULE.ZJH
-
-}
-proto_map.zjh = M_ZJH
-
-
---两人梭哈
-M_LRSH = {
-	module = MODULE.LRSH
-}
-proto_map.lrsh = M_LRSH
 
 return proto_map

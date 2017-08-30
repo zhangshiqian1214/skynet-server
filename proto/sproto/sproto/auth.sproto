@@ -12,7 +12,7 @@
 		account 0 : string #帐号
 		password 1 : string #密码
 		telephone 2 : string #电话号码
-		agentId 3 : string #代理id(推荐人id)
+		agent_id 3 : string #代理id(推荐人id)
 		create_index 4 : integer #创建索引
 		nickname 5 : string #昵称
 	}
